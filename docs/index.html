@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bizzan Cryptocurrency Exchange Platform Documentation</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Comprehensive documentation for the Bizzan cryptocurrency exchange platform - Java-based trading system with web interfaces, mobile apps, and blockchain integration">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    :root {
+      --base-font-size: 14px;
+      --theme-color: #0b7ec8;
+      --theme-color-secondary: #f8f9fa;
+    }
+    
+    .sidebar-nav > ul > li > p {
+      font-weight: 600;
+      color: var(--theme-color);
+      margin: 0.5em 0;
+      padding: 0.2em 0;
+    }
+    
+    .app-name-link {
+      color: var(--theme-color) !important;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    .markdown-section code {
+      background-color: #f8f9fa;
+      color: #476582;
+    }
+    
+    .markdown-section pre {
+      background-color: #282c34;
+    }
+    
+    .markdown-section pre > code {
+      background-color: transparent;
+      color: #abb2bf;
+    }
+    
+    .sidebar-toggle {
+      background-color: var(--theme-color);
+    }
+    
+    .medium-zoom-overlay {
+      background: rgba(0, 0, 0, 0.8) !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">Please wait...</div>
+  <script>
+    window.$docsify = {
+      name: 'Bizzan Crypto Exchange',
+      repo: 'https://github.com/your-org/CoinExchange_CryptoExchange_Java',
+      loadSidebar: true,
+      loadNavbar: false,
+      subMaxLevel: 3,
+      auto2top: true,
+      maxLevel: 4,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md',
+      },
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Search documentation...',
+        noData: 'No results found',
+        depth: 6
+      },
+      copyCode: {
+        buttonText: 'Copy to clipboard',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      pagination: {
+        previousText: 'Previous',
+        nextText: 'Next',
+        crossChapter: true,
+        crossChapterText: true
+      },
+      count: {
+        countable: true,
+        position: 'top',
+        margin: '10px',
+        float: 'right',
+        fontsize: '0.9em',
+        color: 'rgb(90,90,90)',
+        language: 'english',
+        localization: {
+          words: 'words',
+          minute: 'min'
+        },
+        isExpected: true
+      },
+      sidebarDisplayLevel: 1
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Search plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <!-- Copy code plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <!-- Pagination -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+  <!-- Word count -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-count@latest/dist/countable.min.js"></script>
+  <!-- Zoom medium -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <!-- Mermaid support -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true });</script>
+  
+  <!-- Sidebar Collapse plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+</body>
+</html>
