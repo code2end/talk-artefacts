@@ -1,0 +1,374 @@
+specification {
+  element process_step {
+    style {
+      color blue
+      shape rectangle
+    }
+  }
+  element process_decision {
+    style {
+      color orange
+      shape diamond
+    }
+  }
+  element process_stakeholder {
+    style {
+      color green
+      shape person
+    }
+  }
+  element process_system {
+    style {
+      color purple
+      shape rectangle
+    }
+  }
+  element process_document {
+    style {
+      color cyan
+      shape document
+    }
+  }
+  element process_data {
+    style {
+      color gray
+      shape cylinder
+    }
+  }
+  element process_manual {
+    style {
+      color red
+      shape rectangle
+    }
+  }
+  element process_external {
+    style {
+      color darkgray
+      shape rectangle
+    }
+  }
+}
+
+model {
+  // Stakeholders
+  proc_retail_trader = process_stakeholder "Retail Trader" {
+    description "Individual cryptocurrency investor using the exchange platform"
+  }
+  
+  proc_otc_seller = process_stakeholder "OTC Seller" {
+    description "User creating advertisements to sell cryptocurrency for fiat currency"
+  }
+  
+  proc_otc_buyer = process_stakeholder "OTC Buyer" {
+    description "User purchasing cryptocurrency through peer-to-peer marketplace"
+  }
+  
+  proc_exchange_admin = process_stakeholder "Exchange Administrator" {
+    description "Platform administrator managing system configuration and user verification"
+  }
+  
+  proc_customer_support = process_stakeholder "Customer Support" {
+    description "Support team handling user inquiries and dispute resolution"
+  }
+
+  // User Onboarding Process
+  proc_user_registration = process_step "User Registration" {
+    description "Account creation with email/phone verification and basic information collection"
+  }
+  
+  proc_email_verification = process_step "Email Verification" {
+    description "Email address confirmation via verification link sent to user's email"
+  }
+  
+  proc_phone_verification = process_step "Phone Verification" {
+    description "Mobile phone verification using SMS codes and anti-attack protection"
+  }
+  
+  proc_kyc_submission = process_step "KYC Document Submission" {
+    description "User uploads government ID and proof of address for identity verification"
+  }
+  
+  proc_kyc_review = process_manual "KYC Review Process" {
+    description "Manual review of identity documents by compliance team"
+  }
+  
+  proc_account_activation = process_step "Account Activation" {
+    description "Full account activation with trading and withdrawal privileges"
+  }
+
+  // Spot Trading Process
+  proc_market_analysis = process_step "Market Analysis" {
+    description "User analyzes market data, charts, and trading pairs through web/mobile interface"
+  }
+  
+  proc_order_placement = process_step "Order Placement" {
+    description "User creates buy/sell orders with specified price and quantity parameters"
+  }
+  
+  proc_order_validation = process_decision "Order Validation" {
+    description "System validates order parameters, user balance, and trading pair status"
+  }
+  
+  proc_order_matching = process_system "Order Matching Engine" {
+    description "High-performance matching engine processes orders using price-time priority algorithm"
+  }
+  
+  proc_trade_execution = process_step "Trade Execution" {
+    description "Successful order matching results in trade execution and balance updates"
+  }
+  
+  proc_trade_settlement = process_step "Trade Settlement" {
+    description "Automatic balance updates and trade confirmation for both parties"
+  }
+
+  // OTC Trading Process
+  proc_advertisement_creation = process_step "Advertisement Creation" {
+    description "Seller creates trading advertisement with price, payment methods, and terms"
+  }
+  
+  proc_advertisement_review = process_decision "Advertisement Review" {
+    description "System validates advertisement parameters and seller qualifications"
+  }
+  
+  proc_order_response = process_step "Order Response" {
+    description "Buyer browses advertisements and creates order for desired amount"
+  }
+  
+  proc_fund_escrow = process_step "Fund Escrow" {
+    description "Platform locks seller's cryptocurrency in escrow during transaction"
+  }
+  
+  proc_payment_process = process_manual "Payment Process" {
+    description "Buyer makes fiat payment to seller using agreed payment method (off-platform)"
+  }
+  
+  proc_payment_confirmation = process_decision "Payment Confirmation" {
+    description "Seller confirms receipt of fiat payment through platform interface"
+  }
+  
+  proc_crypto_release = process_step "Cryptocurrency Release" {
+    description "Platform releases escrowed cryptocurrency to buyer's wallet"
+  }
+  
+  proc_dispute_resolution = process_manual "Dispute Resolution" {
+    description "Customer support mediates disputes with evidence review and final decision"
+  }
+
+  // Wallet Management Process
+  proc_deposit_initiation = process_step "Deposit Initiation" {
+    description "User initiates cryptocurrency deposit by sending funds to generated platform address"
+  }
+  
+  proc_blockchain_monitoring = process_system "Blockchain Monitoring" {
+    description "Platform monitors blockchain networks for incoming transactions"
+  }
+  
+  proc_deposit_confirmation = process_decision "Deposit Confirmation" {
+    description "System waits for required number of blockchain confirmations"
+  }
+  
+  proc_balance_update = process_step "Balance Update" {
+    description "User's available balance increased after successful deposit confirmation"
+  }
+  
+  proc_withdrawal_request = process_step "Withdrawal Request" {
+    description "User submits cryptocurrency withdrawal with destination address and amount"
+  }
+  
+  proc_withdrawal_validation = process_decision "Withdrawal Validation" {
+    description "System validates withdrawal address, amount, fees, and user verification status"
+  }
+  
+  proc_security_verification = process_step "Security Verification" {
+    description "Multi-factor authentication including SMS/email codes and CAPTCHA"
+  }
+  
+  proc_withdrawal_approval = process_decision "Withdrawal Approval" {
+    description "Automatic approval for small amounts, manual review for large withdrawals"
+  }
+  
+  proc_blockchain_broadcast = process_step "Blockchain Broadcast" {
+    description "Platform broadcasts transaction to appropriate blockchain network"
+  }
+
+  // Compliance and Risk Management
+  proc_aml_screening = process_step "AML Screening" {
+    description "Automated anti-money laundering checks for large transactions"
+  }
+  
+  proc_suspicious_activity = process_decision "Suspicious Activity Detection" {
+    description "Pattern analysis for unusual trading behavior or high-risk transactions"
+  }
+  
+  proc_compliance_reporting = process_step "Compliance Reporting" {
+    description "Generation of regulatory reports and audit trails"
+  }
+  
+  proc_account_restriction = process_manual "Account Restriction" {
+    description "Temporary or permanent account limitations due to compliance issues"
+  }
+
+  // Promotional System
+  proc_referral_registration = process_step "Referral Registration" {
+    description "New user registers using referral link from existing member"
+  }
+  
+  proc_referral_tracking = process_step "Referral Tracking" {
+    description "System tracks referral relationships and commission eligibility"
+  }
+  
+  proc_commission_calculation = process_step "Commission Calculation" {
+    description "Automated calculation of referral commissions based on trading activity"
+  }
+  
+  proc_reward_distribution = process_step "Reward Distribution" {
+    description "Distribution of referral rewards and promotional bonuses to eligible users"
+  }
+
+  // Data and Reporting
+  proc_transaction_logging = process_data "Transaction Logging" {
+    description "Complete audit trail of all user transactions and system events"
+  }
+  
+  proc_market_data = process_data "Market Data Generation" {
+    description "Real-time generation of K-line charts, market statistics, and trading data"
+  }
+  
+  proc_user_reports = process_document "User Reports" {
+    description "Trading history, balance statements, and transaction reports for users"
+  }
+  
+  proc_admin_analytics = process_document "Administrative Analytics" {
+    description "Business intelligence reports for exchange operators and management"
+  }
+
+  // Process Flow Relationships
+
+  // User Onboarding Flow
+  proc_retail_trader -> proc_user_registration "Creates new account"
+  proc_user_registration -> proc_email_verification "Sends verification email"
+  proc_user_registration -> proc_phone_verification "Sends SMS verification code"
+  proc_email_verification -> proc_kyc_submission "Proceeds to identity verification"
+  proc_phone_verification -> proc_kyc_submission "Completes basic verification"
+  proc_kyc_submission -> proc_kyc_review "Documents reviewed by compliance team"
+  proc_exchange_admin -> proc_kyc_review "Reviews and approves/rejects KYC"
+  proc_kyc_review -> proc_account_activation "Approved for full access"
+  proc_account_activation -> proc_retail_trader "Grants full trading privileges"
+
+  // Spot Trading Flow
+  proc_retail_trader -> proc_market_analysis "Analyzes market conditions"
+  proc_market_analysis -> proc_order_placement "Places buy/sell orders"
+  proc_order_placement -> proc_order_validation "Validates order parameters"
+  proc_order_validation -> proc_order_matching "Valid orders sent to matching engine"
+  proc_order_validation -> proc_retail_trader "Invalid orders rejected with error" {
+    condition "Invalid order"
+  }
+  proc_order_matching -> proc_trade_execution "Matching orders executed"
+  proc_trade_execution -> proc_trade_settlement "Balances updated automatically"
+  proc_trade_settlement -> proc_transaction_logging "Trade recorded in audit log"
+  proc_trade_settlement -> proc_market_data "Updates market statistics"
+
+  // OTC Trading Flow
+  proc_otc_seller -> proc_advertisement_creation "Creates trading advertisement"
+  proc_advertisement_creation -> proc_advertisement_review "System validates advertisement"
+  proc_advertisement_review -> proc_otc_buyer "Advertisement published for buyers" {
+    condition "Approved"
+  }
+  proc_otc_buyer -> proc_order_response "Places order on advertisement"
+  proc_order_response -> proc_fund_escrow "Seller funds locked in escrow"
+  proc_fund_escrow -> proc_payment_process "Buyer makes fiat payment"
+  proc_payment_process -> proc_payment_confirmation "Seller confirms payment receipt"
+  proc_payment_confirmation -> proc_crypto_release "Cryptocurrency released to buyer" {
+    condition "Payment confirmed"
+  }
+  proc_payment_confirmation -> proc_dispute_resolution "Dispute raised if payment disputed" {
+    condition "Payment disputed"
+  }
+  proc_customer_support -> proc_dispute_resolution "Mediates transaction disputes"
+  proc_dispute_resolution -> proc_crypto_release "Resolves in favor of buyer"
+  proc_crypto_release -> proc_transaction_logging "Transaction completed and logged"
+
+  // Wallet Operations Flow
+  proc_retail_trader -> proc_deposit_initiation "Sends cryptocurrency to platform address"
+  proc_deposit_initiation -> proc_blockchain_monitoring "Platform monitors blockchain"
+  proc_blockchain_monitoring -> proc_deposit_confirmation "Waits for confirmations"
+  proc_deposit_confirmation -> proc_balance_update "Deposit confirmed and credited"
+  proc_balance_update -> proc_transaction_logging "Deposit recorded"
+  
+  proc_retail_trader -> proc_withdrawal_request "Requests cryptocurrency withdrawal"
+  proc_withdrawal_request -> proc_withdrawal_validation "Validates withdrawal parameters"
+  proc_withdrawal_validation -> proc_security_verification "Security checks required"
+  proc_security_verification -> proc_withdrawal_approval "Automatic or manual approval"
+  proc_withdrawal_approval -> proc_blockchain_broadcast "Transaction broadcast to network"
+  proc_blockchain_broadcast -> proc_transaction_logging "Withdrawal recorded"
+
+  // Compliance Flow
+  proc_trade_execution -> proc_aml_screening "Large trades screened for AML"
+  proc_aml_screening -> proc_suspicious_activity "Pattern analysis for risk"
+  proc_suspicious_activity -> proc_compliance_reporting "Generates compliance reports"
+  proc_suspicious_activity -> proc_account_restriction "Restricts high-risk accounts"
+  proc_exchange_admin -> proc_account_restriction "Reviews and manages restrictions"
+
+  // Promotional Flow
+  proc_referral_registration -> proc_referral_tracking "Tracks referral relationships"
+  proc_trade_settlement -> proc_commission_calculation "Calculates referral commissions"
+  proc_commission_calculation -> proc_reward_distribution "Distributes rewards to referrers"
+  proc_reward_distribution -> proc_transaction_logging "Records promotional transactions"
+
+  // Reporting and Analytics
+  proc_transaction_logging -> proc_user_reports "Generates user transaction reports"
+  proc_transaction_logging -> proc_admin_analytics "Creates business intelligence reports"
+  proc_market_data -> proc_retail_trader "Provides real-time market data"
+  proc_user_reports -> proc_retail_trader "Delivers trading history and statements"
+  proc_admin_analytics -> proc_exchange_admin "Provides operational insights"
+}
+
+views {
+  view proc_complete_journey {
+    title "Complete Business Process Journey"
+    description "End-to-end flow from user onboarding through trading operations and compliance"
+    include *
+  }
+  
+  view proc_user_onboarding {
+    title "User Onboarding and KYC Process"
+    description "New user registration, verification, and account activation workflow"
+    include proc_retail_trader, proc_user_registration, proc_email_verification, proc_phone_verification, proc_kyc_submission, proc_kyc_review, proc_account_activation, proc_exchange_admin
+  }
+  
+  view proc_spot_trading {
+    title "Spot Trading Workflow"
+    description "Market analysis, order placement, matching, and settlement process"
+    include proc_retail_trader, proc_market_analysis, proc_order_placement, proc_order_validation, proc_order_matching, proc_trade_execution, proc_trade_settlement, proc_market_data
+  }
+  
+  view proc_otc_trading {
+    title "OTC Peer-to-Peer Trading Process"
+    description "Advertisement-based P2P trading with escrow and dispute resolution"
+    include proc_otc_seller, proc_otc_buyer, proc_advertisement_creation, proc_advertisement_review, proc_order_response, proc_fund_escrow, proc_payment_process, proc_payment_confirmation, proc_crypto_release, proc_dispute_resolution, proc_customer_support
+  }
+  
+  view proc_wallet_operations {
+    title "Cryptocurrency Wallet Operations"
+    description "Deposit confirmation and withdrawal processing workflows"
+    include proc_retail_trader, proc_deposit_initiation, proc_blockchain_monitoring, proc_deposit_confirmation, proc_balance_update, proc_withdrawal_request, proc_withdrawal_validation, proc_security_verification, proc_withdrawal_approval, proc_blockchain_broadcast
+  }
+  
+  view proc_compliance_risk {
+    title "Compliance and Risk Management"
+    description "AML screening, suspicious activity detection, and regulatory compliance"
+    include proc_aml_screening, proc_suspicious_activity, proc_compliance_reporting, proc_account_restriction, proc_exchange_admin, proc_kyc_review, proc_transaction_logging
+  }
+  
+  view proc_promotional_system {
+    title "Promotional and Referral System"
+    description "Referral tracking, commission calculation, and reward distribution"
+    include proc_referral_registration, proc_referral_tracking, proc_commission_calculation, proc_reward_distribution, proc_transaction_logging, proc_retail_trader
+  }
+  
+  view proc_reporting_analytics {
+    title "Reporting and Business Intelligence"
+    description "Transaction logging, user reports, and administrative analytics"
+    include proc_transaction_logging, proc_market_data, proc_user_reports, proc_admin_analytics, proc_retail_trader, proc_exchange_admin
+  }
+}

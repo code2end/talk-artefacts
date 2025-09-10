@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizzan Cryptocurrency Exchange - Real-World Customer Journey Maps</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap');
+    body {
+      font-family: 'Lato', Arial, sans-serif;
+      background: #f8fafc;
+      color: #22223b;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #2b2d42;
+      margin-top: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem 1rem;
+    }
+    .scenario-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      margin-bottom: 2.5rem;
+      padding: 2rem 2rem 1.5rem 2rem;
+      border-left: 8px solid #00b4d8;
+      transition: box-shadow 0.2s;
+    }
+    .scenario-card details[open] {
+      box-shadow: 0 8px 32px 0 rgba(0,180,216,0.12);
+      border-left-color: #ffb703;
+    }
+    summary {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0077b6;
+      cursor: pointer;
+      outline: none;
+      margin-bottom: 1rem;
+    }
+    .scenario-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .goal {
+      background: #e0fbfc;
+      color: #0077b6;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 1.05rem;
+      margin-bottom: 0.7rem;
+      display: inline-block;
+    }
+    .desc {
+      color: #495057;
+      margin-bottom: 1.2rem;
+      font-size: 1.08rem;
+    }
+    .section-title {
+      color: #ffb703;
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    ul, ol {
+      margin-top: 0.2rem;
+      margin-bottom: 1.2rem;
+      padding-left: 1.5rem;
+    }
+    li {
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .journey-steps details {
+      margin-bottom: 0.7rem;
+      background: #f1faee;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      border-left: 4px solid #00b4d8;
+    }
+    .journey-steps summary {
+      color: #023e8a;
+      font-size: 1.08rem;
+      font-weight: 600;
+    }
+    .sequence-diagram {
+      width: 100%;
+      overflow: auto;
+      margin: 0.6rem 0 1rem 0;
+      padding: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+    }
+    .sequence-diagram svg {
+      width: 100%;
+      min-width: 600px;
+      display: block;
+    }
+    /* Fix for Mermaid's extra whitespace */
+    .sequence-diagram .mermaid {
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+    /* Target the specific SVG elements to remove padding */
+    .sequence-diagram svg .actor, 
+    .sequence-diagram svg .messageLine,
+    .sequence-diagram svg .note {
+      margin: 0;
+      padding: 0;
+    }
+    /* Reduce space between diagram elements */
+    .sequence-diagram svg .actor-line {
+      stroke-width: 0.5px;
+    }
+    /* Fix for top/bottom margins in Mermaid output */
+    .sequence-diagram svg > g {
+      transform: translateY(-10px);
+    }
+    .sequence-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .zoom-btn {
+      background: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+    }
+    .zoom-btn:hover {
+      background: #023e8a;
+    }
+    .reset-btn {
+      background: #ffb703;
+      color: #023e8a;
+    }
+    .glossary {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.98rem;
+      color: #495057;
+      border-left: 4px solid #adb5bd;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0.5rem; }
+      .scenario-card { padding: 1rem; }
+    }
+  </style>
+  <!-- Load required libraries for Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Bizzan Cryptocurrency Exchange - Real-World Customer Journey Maps</h1>
+    
+    <!-- Mermaid initialization script -->
+    <script>
+      // Initialize mermaid
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { useMaxWidth: false },
+        sequence: { 
+          useMaxWidth: false,
+          showSequenceNumbers: true,
+          diagramMarginY: 10,  // Reduce top/bottom margins
+          diagramMarginX: 10,  // Reduce left/right margins
+          actorMargin: 50,     // Reduce space between actors
+          width: 150,          // Default width
+          height: 35,          // Reduce height of boxes
+          boxMargin: 5,        // Reduce margin around boxes
+          messageMargin: 35    // Reduce space between messages
+        }
+      });
+      
+      // Function to setup pan-zoom for sequence diagrams
+      function setupZoom() {
+        const diagrams = document.querySelectorAll('.sequence-diagram');
+        diagrams.forEach((diagram, index) => {
+          const svgElement = diagram.querySelector('svg');
+          if (svgElement) {
+            // Initialize pan-zoom
+            const panZoomInstance = svgPanZoom(svgElement, {
+              zoomEnabled: true,
+              controlIconsEnabled: true,
+              fit: true,
+              center: true,
+              minZoom: 0.5,
+              maxZoom: 3,
+              zoomScaleSensitivity: 0.4
+            });
+            
+            // Store pan-zoom instance for reset functionality
+            diagram.panZoomInstance = panZoomInstance;
+            
+            // Setup zoom buttons if they exist
+            const zoomInBtn = document.getElementById(`zoom-in-${index}`);
+            const zoomOutBtn = document.getElementById(`zoom-out-${index}`);
+            const resetBtn = document.getElementById(`reset-${index}`);
+            
+            if (zoomInBtn) zoomInBtn.addEventListener('click', () => panZoomInstance.zoomIn());
+            if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => panZoomInstance.zoomOut());
+            if (resetBtn) resetBtn.addEventListener('click', () => panZoomInstance.reset());
+          }
+        });
+      }
+      
+      // Wait for mermaid to render diagrams, then setup pan-zoom
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(setupZoom, 1000); // Give mermaid time to render
+        
+        // Fix excess whitespace after render
+        setTimeout(function() {
+          document.querySelectorAll('.sequence-diagram svg').forEach(svg => {
+            // Get actual height of the content
+            const bbox = svg.getBBox();
+            // Set the viewBox to match content
+            svg.setAttribute('viewBox', `0 0 ${bbox.width} ${bbox.height + 20}`);
+            // Remove fixed height if present
+            if (svg.hasAttribute('height')) {
+              svg.removeAttribute('height');
+            }
+            // Set height based on content
+            svg.style.height = 'auto';
+          });
+        }, 1200);
+      });
+    </script>
+    
+    <!-- SCENARIO CARDS START -->
+    <!-- Scenario 1 -->
+    <section class="scenario-card">
+      <details open>
+        <summary>1. New User Onboarding and First BTC Trade</summary>
+        <div class="scenario-header">
+          <span class="goal">Complete user registration, KYC verification, wallet setup, and execute first Bitcoin purchase through spot trading with multi-factor security verification.</span>
+        </div>
+        <div class="desc">This scenario demonstrates the complete onboarding experience for Sarah Chen, a new cryptocurrency investor from Singapore, who registers on Bizzan Exchange, completes identity verification, deposits USDT, and makes her first BTC purchase using the spot trading engine.</div>
+        <div class="section-title">Key System Components:</div>
+        <ul>
+          <li>User Center API - User registration, authentication, and profile management</li>
+          <li>Core Module - Business logic for member management and wallet operations</li>
+          <li>Exchange Engine - High-performance matching engine for BTC/USDT trading</li>
+          <li>Market Service - Real-time price data and K-line charts</li>
+          <li>Wallet Service - Multi-signature address generation and balance management</li>
+          <li>Notification Service - SMS and email verification systems</li>
+        </ul>
+        <div class="section-title">Key Actors:</div>
+        <ul>
+          <li><b>Sarah Chen</b> - New user from Singapore, tech professional interested in cryptocurrency investment</li>
+          <li><b>Bizzan Exchange Platform</b> - Complete cryptocurrency trading ecosystem</li>
+          <li><b>SMS Gateway</b> - International SMS verification service</li>
+          <li><b>KYC Verification Service</b> - Identity verification and compliance checking</li>
+          <li><b>Bitcoin Network</b> - Blockchain for deposit confirmation and address validation</li>
+          <li><b>USDT Network</b> - ERC-20 token network for stablecoin operations</li>
+        </ul>
+        <div class="section-title">Sequence Diagram:</div>
+        <div class="sequence-controls">
+          <button id="zoom-in-0" class="zoom-btn">Zoom In</button>
+          <button id="zoom-out-0" class="zoom-btn">Zoom Out</button>
+          <button id="reset-0" class="zoom-btn reset-btn">Reset</button>
+        </div>
+        <div class="sequence-diagram">
+          <pre class="mermaid">
+            sequenceDiagram
+                participant Sarah as Sarah Chen
+                participant WebApp as Bizzan Web App
+                participant UCAPI as User Center API
+                participant Core as Core Module
+                participant SMS as SMS Gateway
+                participant KYC as KYC Service
+                participant WalletSvc as Wallet Service
+                participant ExAPI as Exchange API
+                participant Engine as Exchange Engine
+                participant Market as Market Service
+                participant Blockchain as Blockchain Networks
+
+                %% 1. Registration Process
+                Sarah->>WebApp: Access registration page
+                WebApp->>Sarah: Display registration form
+                Sarah->>WebApp: Submit registration (phone: +65-8123-4567)
+                WebApp->>UCAPI: POST /register/phone
+                UCAPI->>SMS: Send verification code (+65-8123-4567)
+                SMS-->>Sarah: SMS: "Your Bizzan verification code: 123456"
+                Sarah->>WebApp: Enter verification code
+                WebApp->>UCAPI: Verify code and create account
+                UCAPI->>Core: Create Member entity (ID: 100045)
+                Core->>WalletSvc: Trigger member-register event
+                WalletSvc->>Blockchain: Generate BTC/ETH/USDT addresses
+                Blockchain-->>WalletSvc: Return addresses
+                WalletSvc->>Core: Create wallet entries for all supported coins
+                UCAPI-->>WebApp: Registration successful
+                WebApp-->>Sarah: Welcome! Account created successfully
+
+                %% 2. KYC Verification
+                Sarah->>WebApp: Navigate to profile verification
+                WebApp->>UCAPI: GET /member/my-info
+                UCAPI-->>WebApp: Return member profile (status: GENERAL)
+                Sarah->>WebApp: Upload ID documents (Passport, Utility bill)
+                WebApp->>UCAPI: Submit KYC documents
+                UCAPI->>KYC: Process identity verification
+                KYC->>KYC: Validate documents, check sanctions lists
+                KYC-->>UCAPI: Verification approved
+                UCAPI->>Core: Update member status to REALNAME
+                Core-->>UCAPI: Member status updated
+                UCAPI->>SMS: Send verification success notification
+                SMS-->>Sarah: SMS: "KYC verification approved. Trading limits increased."
+
+                %% 3. First Deposit
+                Sarah->>WebApp: Navigate to deposit section
+                WebApp->>UCAPI: GET /asset/wallet/USDT
+                UCAPI-->>WebApp: Return USDT wallet (address: 0x742d35...)
+                WebApp-->>Sarah: Display USDT deposit address
+                Sarah->>Blockchain: Send 1000 USDT to exchange address
+                Blockchain->>WalletSvc: Deposit detected (TX: 0xabc123...)
+                WalletSvc->>WalletSvc: Wait for 12 confirmations
+                WalletSvc->>Core: Process deposit (amount: 1000 USDT)
+                Core->>Core: Update wallet balance
+                Core->>SMS: Send deposit confirmation
+                SMS-->>Sarah: SMS: "Deposit confirmed: 1000 USDT"
+
+                %% 4. Market Research
+                Sarah->>WebApp: Browse trading pairs
+                WebApp->>Market: GET /symbol-thumb
+                Market-->>WebApp: Return all trading pairs data
+                WebApp-->>Sarah: Display market overview
+                Sarah->>WebApp: Select BTC/USDT pair
+                WebApp->>Market: GET /symbol-info?symbol=BTC/USDT
+                Market-->>WebApp: Return BTC/USDT details
+                WebApp->>Market: GET /history (1H resolution)
+                Market-->>WebApp: Return K-line data
+                WebApp-->>Sarah: Display BTC chart and orderbook
+
+                %% 5. First Trade Execution
+                Sarah->>WebApp: Place buy order (0.02 BTC at 43,500 USDT)
+                WebApp->>ExAPI: POST /exchange/order/add
+                ExAPI->>Engine: Submit order to matching engine
+                Engine->>Engine: Validate order (balance: 1000 USDT)
+                Engine->>Core: Freeze 870 USDT (0.02 * 43,500)
+                Engine->>Engine: Add to BTC/USDT order book
+                Engine->>Market: Publish order book update
+                Market->>WebApp: WebSocket: Order book changed
+                
+                %% Assume partial fill occurs
+                Engine->>Engine: Match with sell order (0.01 BTC at 43,400)
+                Engine->>Core: Update balances (Buy 0.01 BTC, Pay 434 USDT)
+                Engine->>Market: Publish trade event
+                Market->>WebApp: WebSocket: Trade executed
+                WebApp-->>Sarah: Notification: Partial fill (0.01 BTC purchased)
+
+                %% 6. Portfolio Review
+                Sarah->>WebApp: Check portfolio balance
+                WebApp->>UCAPI: GET /asset/wallet
+                UCAPI-->>WebApp: Return all wallet balances
+                WebApp-->>Sarah: Display portfolio (0.01 BTC, 566 USDT available)
+                Sarah->>WebApp: View transaction history
+                WebApp->>UCAPI: GET /asset/transaction/all
+                UCAPI-->>WebApp: Return transaction history
+                WebApp-->>Sarah: Display complete transaction log
+          </pre>
+        </div>
+        <div class="section-title">Journey Steps:</div>
+        <div class="journey-steps">
+          <details>
+            <summary>1. Account Registration</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah Chen</li>
+              <li><b>Activity:</b> Creates account using Singapore phone number (+65-8123-4567)</li>
+              <li><b>Technical:</b> User Center API validates phone format, generates verification code</li>
+              <li><b>System Components:</b> Web Frontend → User Center API → SMS Gateway</li>
+              <li><b>Business Rules:</b> Phone number uniqueness check, supported country validation</li>
+            </ul>
+          </details>
+          <details>
+            <summary>2. Phone Verification</summary>
+            <ul>
+              <li><b>Actor:</b> SMS Gateway & Sarah</li>
+              <li><b>Activity:</b> Receives and enters 6-digit verification code</li>
+              <li><b>Technical:</b> 5-minute code expiration, rate limiting (3 attempts/hour)</li>
+              <li><b>System Components:</b> SMS Gateway → User verification logic</li>
+              <li><b>Business Rules:</b> Code expires after 300 seconds, max 3 verification attempts</li>
+            </ul>
+          </details>
+          <details>
+            <summary>3. Wallet Initialization</summary>
+            <ul>
+              <li><b>Actor:</b> Wallet Service</li>
+              <li><b>Activity:</b> Generates unique deposit addresses for BTC, ETH, USDT</li>
+              <li><b>Technical:</b> HD wallet implementation, separate address per cryptocurrency</li>
+              <li><b>System Components:</b> Core Module → Wallet Service → Blockchain RPC clients</li>
+              <li><b>Business Rules:</b> Each member gets unique addresses for all supported coins</li>
+            </ul>
+          </details>
+          <details>
+            <summary>4. KYC Document Submission</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah & KYC Verification Service</li>
+              <li><b>Activity:</b> Uploads passport and utility bill for identity verification</li>
+              <li><b>Technical:</b> Document OCR, sanctions list checking, facial recognition</li>
+              <li><b>System Components:</b> File upload → KYC Service → Compliance database</li>
+              <li><b>Business Rules:</b> Upgraded to REALNAME status, higher trading limits unlocked</li>
+            </ul>
+          </details>
+          <details>
+            <summary>5. USDT Deposit Processing</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah & Blockchain Networks</li>
+              <li><b>Activity:</b> Sends 1000 USDT from external wallet to exchange address</li>
+              <li><b>Technical:</b> Blockchain monitoring, 12 confirmation requirement for USDT</li>
+              <li><b>System Components:</b> Wallet Service → Ethereum Network → Balance updates</li>
+              <li><b>Business Rules:</b> Minimum deposit amounts, automatic credit after confirmations</li>
+            </ul>
+          </details>
+          <details>
+            <summary>6. Market Data Research</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah & Market Service</li>
+              <li><b>Activity:</b> Reviews BTC/USDT price charts and market depth</li>
+              <li><b>Technical:</b> Real-time WebSocket data, K-line generation from trade history</li>
+              <li><b>System Components:</b> Market Service → MongoDB → TradingView charts</li>
+              <li><b>Business Rules:</b> Live price updates, multiple timeframe support (1m to 1M)</li>
+            </ul>
+          </details>
+          <details>
+            <summary>7. Order Placement and Validation</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah & Exchange Engine</li>
+              <li><b>Activity:</b> Places limit buy order for 0.02 BTC at 43,500 USDT each</li>
+              <li><b>Technical:</b> Order validation, balance freezing, order book insertion</li>
+              <li><b>System Components:</b> Exchange API → Exchange Engine → Core Module</li>
+              <li><b>Business Rules:</b> Sufficient balance check, minimum order size validation</li>
+            </ul>
+          </details>
+          <details>
+            <summary>8. Trade Execution and Matching</summary>
+            <ul>
+              <li><b>Actor:</b> Exchange Engine</li>
+              <li><b>Activity:</b> Matches order against existing sell orders in real-time</li>
+              <li><b>Technical:</b> Price-time priority matching, partial fill support</li>
+              <li><b>System Components:</b> Exchange Engine → In-memory order book → Kafka events</li>
+              <li><b>Business Rules:</b> Best price execution, atomic balance updates</li>
+            </ul>
+          </details>
+          <details>
+            <summary>9. Balance Updates and Notifications</summary>
+            <ul>
+              <li><b>Actor:</b> Core Module & Notification Service</li>
+              <li><b>Activity:</b> Updates Sarah's BTC and USDT balances, sends trade confirmation</li>
+              <li><b>Technical:</b> Database transactions, WebSocket real-time updates</li>
+              <li><b>System Components:</b> Core Module → Database → WebSocket clients</li>
+              <li><b>Business Rules:</b> Atomic balance updates, immediate UI reflection</li>
+            </ul>
+          </details>
+          <details>
+            <summary>10. Portfolio Review and History</summary>
+            <ul>
+              <li><b>Actor:</b> Sarah</li>
+              <li><b>Activity:</b> Reviews updated portfolio showing 0.01 BTC and remaining USDT</li>
+              <li><b>Technical:</b> Real-time balance queries, transaction history pagination</li>
+              <li><b>System Components:</b> User Center API → Core Module → Transaction logs</li>
+              <li><b>Business Rules:</b> Complete audit trail, real-time balance accuracy</li>
+            </ul>
+          </details>
+        </div>
+        <div class="section-title">Glossary</div>
+        <details class="glossary">
+          <summary>Glossary</summary>
+          <ul>
+            <li><b>Exchange Engine</b>: High-performance in-memory matching engine that processes orders with price-time priority.</li>
+            <li><b>HD Wallet</b>: Hierarchical Deterministic wallet system generating unique addresses from master seed.</li>
+            <li><b>K-line</b>: Candlestick chart data showing open, high, low, close prices and volume for time periods.</li>
+            <li><b>KYC (Know Your Customer)</b>: Identity verification process requiring government ID and proof of address.</li>
+            <li><b>Market Service</b>: Microservice handling real-time market data, price feeds, and chart generation.</li>
+            <li><b>Member Status Levels</b>: GENERAL (basic), REALNAME (ID verified), AUTHENTICATED (full verification).</li>
+            <li><b>Order Book</b>: Live list of buy and sell orders sorted by price, showing market depth.</li>
+            <li><b>Partial Fill</b>: Order execution where only part of requested amount is immediately matched.</li>
+            <li><b>Price-Time Priority</b>: Order matching algorithm prioritizing best price first, then earliest timestamp.</li>
+            <li><b>Spot Trading</b>: Immediate exchange of cryptocurrencies at current market prices.</li>
+            <li><b>USDT (Tether)</b>: USD-pegged stablecoin available on multiple blockchain networks.</li>
+            <li><b>User Center API</b>: Microservice managing user authentication, profiles, and account operations.</li>
+            <li><b>Wallet Service</b>: Microservice handling cryptocurrency deposits, withdrawals, and address management.</li>
+            <li><b>WebSocket</b>: Real-time communication protocol for live price updates and trade notifications.</li>
+          </ul>
+        </details>
+      </details>
+    </section>
+    
+    <!-- Scenario 2 -->
+    <section class="scenario-card">
+      <details>
+        <summary>2. OTC Trading: Business Partner Advertisement and P2P Transaction</summary>
+        <div class="scenario-header">
+          <span class="goal">Execute a large-scale peer-to-peer cryptocurrency trade between a business partner and retail user using Bizzan's OTC platform with escrow security and multiple payment methods.</span>
+        </div>
+        <div class="desc">This scenario demonstrates how Wang Wei, a verified business partner in Beijing, creates a USDT selling advertisement and successfully executes a 50,000 USDT trade with Lisa Zhang, a retail trader, using bank transfer payment with the platform's escrow system ensuring security for both parties.</div>
+        <div class="section-title">Key System Components:</div>
+        <ul>
+          <li>OTC API - Advertisement management and order processing</li>
+          <li>OTC Core Service - Business logic for P2P trading and escrow</li>
+          <li>Core Module - User management and wallet balance operations</li>
+          <li>Chat Service - Real-time communication between trading parties</li>
+          <li>Appeal System - Dispute resolution and mediation services</li>
+          <li>Payment Method Integration - Multiple fiat payment options</li>
+        </ul>
+        <div class="section-title">Key Actors:</div>
+        <ul>
+          <li><b>Wang Wei</b> - Verified business partner in Beijing, cryptocurrency trader with 500,000 USDT inventory</li>
+          <li><b>Lisa Zhang</b> - Individual trader in Shanghai seeking to buy USDT with Chinese Yuan</li>
+          <li><b>Bizzan OTC Platform</b> - Peer-to-peer trading infrastructure with escrow services</li>
+          <li><b>Chinese Banking System</b> - Bank transfer processing for CNY payments</li>
+          <li><b>Platform Admin Team</b> - Customer support and dispute resolution specialists</li>
+          <li><b>Notification Services</b> - SMS and in-app messaging for trade coordination</li>
+        </ul>
+        <div class="section-title">Sequence Diagram:</div>
+        <div class="sequence-controls">
+          <button id="zoom-in-1" class="zoom-btn">Zoom In</button>
+          <button id="zoom-out-1" class="zoom-btn">Zoom Out</button>
+          <button id="reset-1" class="zoom-btn reset-btn">Reset</button>
+        </div>
+        <div class="sequence-diagram">
+          <pre class="mermaid">
+            sequenceDiagram
+                participant Wang as Wang Wei (Business Partner)
+                participant OTCApp as Bizzan OTC App
+                participant OTCAPI as OTC API
+                participant OTCCore as OTC Core Service
+                participant Core as Core Module
+                participant Lisa as Lisa Zhang (Buyer)
+                participant Chat as Chat Service
+                participant Bank as Chinese Banking
+                participant SMS as SMS Service
+                participant Admin as Platform Admin
+
+                %% 1. Advertisement Creation
+                Wang->>OTCApp: Create sell advertisement
+                OTCApp->>OTCAPI: POST /advertise/create
+                OTCAPI->>OTCCore: Validate business partner status
+                OTCCore-->>OTCAPI: Confirmed: Business partner (no commission)
+                OTCAPI->>Core: Check USDT balance (500,000 available)
+                Core-->>OTCAPI: Balance confirmed
+                OTCAPI->>OTCCore: Create advertisement
+                Note over OTCCore: Ad details: Sell 50,000 USDT<br/>Rate: 7.15 CNY/USDT<br/>Min: 10,000 USDT, Max: 50,000 USDT<br/>Payment: Bank Transfer<br/>Time limit: 30 minutes
+                OTCCore-->>OTCAPI: Advertisement created (ID: AD12345)
+                OTCAPI-->>OTCApp: Success confirmation
+                OTCApp-->>Wang: Advertisement published
+
+                %% 2. Advertisement Goes Live
+                Wang->>OTCApp: Put advertisement on shelves
+                OTCApp->>OTCAPI: POST /advertise/on-shelves
+                OTCAPI->>Core: Freeze 50,000 USDT for escrow
+                Core->>Core: Update balance (Available: 450,000, Frozen: 50,000)
+                Core-->>OTCAPI: Escrow funds locked
+                OTCAPI-->>OTCApp: Advertisement now visible
+                OTCApp-->>Wang: Status: Live (accepting orders)
+
+                %% 3. Buyer Discovers Advertisement
+                Lisa->>OTCApp: Browse USDT buy advertisements
+                OTCApp->>OTCAPI: GET /advertise/page (filter: SELL, coin: USDT)
+                OTCAPI-->>OTCApp: Return active advertisements
+                OTCApp-->>Lisa: Display ads including Wang's offer
+                Lisa->>OTCApp: View Wang's advertisement details
+                OTCApp->>OTCAPI: GET /advertise/detail
+                OTCAPI-->>OTCApp: Return ad details and seller rating
+                OTCApp-->>Lisa: Show: Wang Wei, 98.5% positive rating, 1,247 trades
+
+                %% 4. Order Creation
+                Lisa->>OTCApp: Create buy order (30,000 USDT)
+                OTCApp->>OTCAPI: POST /order/create
+                OTCAPI->>OTCCore: Validate order parameters
+                OTCCore->>Core: Verify Lisa's trading eligibility
+                Core-->>OTCCore: Confirmed: REALNAME verified member
+                OTCCore->>OTCCore: Calculate: 30,000 USDT * 7.15 = 214,500 CNY
+                OTCCore->>Core: Create escrow order
+                Core->>Core: Allocate 30,000 USDT from Wang's frozen balance
+                Core-->>OTCCore: Order created (ID: ORD67890)
+                OTCCore-->>OTCAPI: Order ready for payment
+                OTCAPI->>SMS: Notify both parties of new order
+                SMS-->>Wang: SMS: "New order: 30,000 USDT from Lisa Zhang"
+                SMS-->>Lisa: SMS: "Order created: Pay 214,500 CNY within 30 min"
+
+                %% 5. Payment Information Exchange
+                OTCAPI->>Chat: Create chat room for order
+                Chat-->>Lisa: Chat room opened with Wang Wei
+                Wang->>Chat: Send bank account details
+                Chat->>Chat: Store payment info securely
+                Chat-->>Lisa: Receive: Bank: ICBC, Account: 622202****1234, Name: Wang Wei
+                Lisa->>Chat: Confirm payment method accepted
+                Chat-->>Wang: Lisa confirmed bank transfer method
+
+                %% 6. Fiat Payment Processing
+                Lisa->>Bank: Transfer 214,500 CNY to Wang's account
+                Bank->>Bank: Process interbank transfer
+                Bank-->>Lisa: Transfer completed, reference: TXN202401180001
+                Lisa->>OTCApp: Mark payment as completed
+                OTCApp->>OTCAPI: POST /order/pay-complete
+                OTCAPI->>OTCCore: Update order status to PAID
+                OTCCore->>SMS: Notify seller of payment claim
+                SMS-->>Wang: SMS: "Buyer claims payment sent. Check account."
+
+                %% 7. Payment Verification
+                Wang->>Bank: Check account balance
+                Bank-->>Wang: Confirm: +214,500 CNY received
+                Wang->>OTCApp: Confirm payment received
+                OTCApp->>OTCAPI: POST /order/confirm-payment
+                OTCAPI->>OTCCore: Validate payment confirmation
+                OTCCore->>Core: Release 30,000 USDT from escrow to Lisa
+                Core->>Core: Update balances
+                Note over Core: Lisa: +30,000 USDT<br/>Wang: -30,000 USDT (from frozen)<br/>No commission (business partner)
+                Core-->>OTCCore: Transfer completed
+                OTCCore->>SMS: Send completion notifications
+                SMS-->>Lisa: SMS: "Trade completed: 30,000 USDT received"
+                SMS-->>Wang: SMS: "Trade completed: Payment confirmed"
+
+                %% 8. Order Completion and Rating
+                OTCAPI->>OTCCore: Update order status to COMPLETED
+                OTCCore->>OTCCore: Record trade statistics
+                OTCAPI-->>OTCApp: Trade completion confirmed
+                Lisa->>OTCApp: Rate Wang Wei (5 stars, positive feedback)
+                OTCApp->>OTCAPI: POST /order/evaluate
+                OTCAPI->>OTCCore: Update seller rating
+                OTCCore-->>OTCAPI: Rating recorded
+                Wang->>OTCApp: Rate Lisa Zhang (5 stars)
+                OTCApp->>OTCAPI: POST /order/evaluate
+                OTCAPI->>OTCCore: Update buyer rating
+                OTCCore-->>OTCAPI: Rating recorded
+
+                %% 9. Advertisement Management
+                Wang->>OTCApp: Check remaining advertisement inventory
+                OTCApp->>OTCAPI: GET /advertise/detail
+                OTCAPI-->>OTCApp: Remaining: 20,000 USDT available
+                Wang->>OTCApp: Update advertisement (reduce to 20,000 max)
+                OTCApp->>OTCAPI: PUT /advertise/update
+                OTCAPI->>OTCCore: Update advertisement limits
+                OTCCore-->>OTCAPI: Advertisement updated
+                OTCAPI-->>OTCApp: Changes saved
+                OTCApp-->>Wang: Ad updated: Max 20,000 USDT remaining
+          </pre>
+        </div>
+        <div class="section-title">Journey Steps:</div>
+        <div class="journey-steps">
+          <details>
+            <summary>1. Business Partner Advertisement Creation</summary>
+            <ul>
+              <li><b>Actor:</b> Wang Wei (Business Partner)</li>
+              <li><b>Activity:</b> Creates advertisement to sell 50,000 USDT at 7.15 CNY per USDT</li>
+              <li><b>Technical:</b> OTC API validates business partner status for commission-free trading</li>
+              <li><b>System Components:</b> OTC API → OTC Core Service → Core Module</li>
+              <li><b>Business Rules:</b> Business partners trade without commission, verified status required</li>
+            </ul>
+          </details>
+          <details>
+            <summary>2. Escrow Fund Locking</summary>
+            <ul>
+              <li><b>Actor:</b> OTC Core Service & Core Module</li>
+              <li><b>Activity:</b> Freezes 50,000 USDT in Wang's wallet when advertisement goes live</li>
+              <li><b>Technical:</b> Balance separation into available and frozen amounts</li>
+              <li><b>System Components:</b> Core Module → Wallet balance management</li>
+              <li><b>Business Rules:</b> Seller funds must be escrowed before advertisement visibility</li>
+            </ul>
+          </details>
+          <details>
+            <summary>3. Advertisement Discovery and Due Diligence</summary>
+            <ul>
+              <li><b>Actor:</b> Lisa Zhang</li>
+              <li><b>Activity:</b> Searches for USDT purchase options, reviews Wang's trading history</li>
+              <li><b>Technical:</b> Filtering by coin type, payment method, and amount ranges</li>
+              <li><b>System Components:</b> OTC API → Advertisement database with search/filter</li>
+              <li><b>Business Rules:</b> Only verified members can create orders, rating system for trust</li>
+            </ul>
+          </details>
+          <details>
+            <summary>4. Order Creation and Validation</summary>
+            <ul>
+              <li><b>Actor:</b> Lisa & OTC Core Service</li>
+              <li><b>Activity:</b> Creates order for 30,000 USDT, calculates 214,500 CNY payment</li>
+              <li><b>Technical:</b> Price calculation, order validation, escrow allocation</li>
+              <li><b>System Components:</b> OTC API → OTC Core → Core Module</li>
+              <li><b>Business Rules:</b> Order must be within advertisement limits, buyer KYC verification required</li>
+            </ul>
+          </details>
+          <details>
+            <summary>5. Secure Communication Setup</summary>
+            <ul>
+              <li><b>Actor:</b> Chat Service</li>
+              <li><b>Activity:</b> Creates encrypted chat room for order-specific communication</li>
+              <li><b>Technical:</b> Real-time messaging with MongoDB storage, encrypted payment details</li>
+              <li><b>System Components:</b> Chat Service → MongoDB → Real-time messaging</li>
+              <li><b>Business Rules:</b> Payment information shared only between trading parties</li>
+            </ul>
+          </details>
+          <details>
+            <summary>6. Bank Transfer Payment</summary>
+            <ul>
+              <li><b>Actor:</b> Lisa & Chinese Banking System</li>
+              <li><b>Activity:</b> Transfers 214,500 CNY to Wang's ICBC bank account</li>
+              <li><b>Technical:</b> Interbank transfer processing, transaction reference generation</li>
+              <li><b>System Components:</b> Chinese Banking Network → Payment confirmation</li>
+              <li><b>Business Rules:</b> 30-minute payment window, real bank account verification</li>
+            </ul>
+          </details>
+          <details>
+            <summary>7. Payment Verification and Confirmation</summary>
+            <ul>
+              <li><b>Actor:</b> Wang Wei</li>
+              <li><b>Activity:</b> Verifies CNY receipt and confirms payment to release USDT</li>
+              <li><b>Technical:</b> Manual verification process, anti-fraud checking</li>
+              <li><b>System Components:</b> OTC API → Payment confirmation workflow</li>
+              <li><b>Business Rules:</b> Seller must confirm payment before cryptocurrency release</li>
+            </ul>
+          </details>
+          <details>
+            <summary>8. Escrow Release and Balance Updates</summary>
+            <ul>
+              <li><b>Actor:</b> Core Module</li>
+              <li><b>Activity:</b> Transfers 30,000 USDT from escrow to Lisa's available balance</li>
+              <li><b>Technical:</b> Atomic database transactions, balance consistency checks</li>
+              <li><b>System Components:</b> Core Module → Database transactions</li>
+              <li><b>Business Rules:</b> No commission for business partner trades, immediate balance updates</li>
+            </ul>
+          </details>
+          <details>
+            <summary>9. Mutual Rating and Feedback</summary>
+            <ul>
+              <li><b>Actor:</b> Both Wang and Lisa</li>
+              <li><b>Activity:</b> Exchange 5-star ratings and positive feedback comments</li>
+              <li><b>Technical:</b> Rating aggregation algorithms, reputation score updates</li>
+              <li><b>System Components:</b> OTC API → Rating system → User profiles</li>
+              <li><b>Business Rules:</b> Both parties can rate after successful completion</li>
+            </ul>
+          </details>
+          <details>
+            <summary>10. Advertisement Inventory Management</summary>
+            <ul>
+              <li><b>Actor:</b> Wang Wei</li>
+              <li><b>Activity:</b> Updates advertisement to reflect remaining 20,000 USDT inventory</li>
+              <li><b>Technical:</b> Real-time advertisement updates, inventory tracking</li>
+              <li><b>System Components:</b> OTC API → Advertisement management</li>
+              <li><b>Business Rules:</b> Advertisements automatically adjust based on successful trades</li>
+            </ul>
+          </details>
+        </div>
+        <details class="glossary">
+          <summary>Glossary</summary>
+          <ul>
+            <li><b>Business Partner</b>: Verified high-volume trader with enhanced privileges and commission-free trading.</li>
+            <li><b>Chat Service</b>: Secure messaging system for order-specific communication between trading parties.</li>
+            <li><b>CNY (Chinese Yuan)</b>: Official currency of China, commonly used in OTC trading for cryptocurrency purchases.</li>
+            <li><b>Escrow System</b>: Security mechanism that holds cryptocurrency until payment confirmation and release.</li>
+            <li><b>Frozen Balance</b>: Temporarily locked funds that cannot be used for other transactions during active orders.</li>
+            <li><b>ICBC (Industrial and Commercial Bank of China)</b>: Major Chinese bank commonly used for OTC transactions.</li>
+            <li><b>Order Lifecycle</b>: Complete process from creation through payment, confirmation, and completion.</li>
+            <li><b>OTC (Over-The-Counter)</b>: Direct peer-to-peer trading between users without order book matching.</li>
+            <li><b>OTC API</b>: Microservice handling advertisement management and P2P trading operations.</li>
+            <li><b>OTC Core Service</b>: Business logic engine for OTC trading rules and escrow management.</li>
+            <li><b>Payment Window</b>: Time limit (typically 15-30 minutes) for completing fiat currency payment.</li>
+            <li><b>Rating System</b>: Peer review mechanism for building trust between trading parties.</li>
+            <li><b>REALNAME Status</b>: Identity verification level required for OTC trading participation.</li>
+            <li><b>USDT (Tether)</b>: USD-pegged stablecoin frequently used in OTC trading for price stability.</li>
+          </ul>
+        </details>
+      </details>
+    </section>
+    
+    <!-- Scenario 3 -->
+    <section class="scenario-card">
+      <details>
+        <summary>3. Advanced Spot Trading: Professional Trader with Multiple Orders and Risk Management</summary>
+        <div class="scenario-header">
+          <span class="goal">Execute sophisticated trading strategy using multiple order types, real-time market data, and professional portfolio management tools across various cryptocurrency pairs.</span>
+        </div>
+        <div class="desc">This scenario follows David Kim, a professional cryptocurrency trader from Seoul, who uses Bizzan's advanced trading features to execute a complex arbitrage strategy across BTC/USDT and ETH/USDT pairs, utilizing limit orders, market orders, and stop-losses while monitoring real-time market data and managing a diverse portfolio.</div>
+        <div class="section-title">Key System Components:</div>
+        <ul>
+          <li>Exchange API - Advanced order management and portfolio operations</li>
+          <li>Exchange Engine - High-frequency matching across multiple trading pairs</li>
+          <li>Market Service - Real-time data feeds and professional charting</li>
+          <li>WebSocket Streams - Live price updates and order book changes</li>
+          <li>Risk Management System - Position limits and automated safeguards</li>
+          <li>Portfolio Analytics - Performance tracking and P&L calculations</li>
+        </ul>
+        <div class="section-title">Key Actors:</div>
+        <ul>
+          <li><b>David Kim</b> - Professional trader in Seoul managing $500,000 cryptocurrency portfolio</li>
+          <li><b>Bizzan Exchange Engine</b> - High-performance matching system handling multiple pairs</li>
+          <li><b>Market Data Providers</b> - External price feeds for arbitrage opportunities</li>
+          <li><b>TradingView Integration</b> - Professional charting and technical analysis tools</li>
+          <li><b>Risk Management System</b> - Automated position monitoring and risk controls</li>
+          <li><b>WebSocket Infrastructure</b> - Real-time data streaming for professional trading</li>
+        </ul>
+        <div class="section-title">Sequence Diagram:</div>
+        <div class="sequence-controls">
+          <button id="zoom-in-2" class="zoom-btn">Zoom In</button>
+          <button id="zoom-out-2" class="zoom-btn">Zoom Out</button>
+          <button id="reset-2" class="zoom-btn reset-btn">Reset</button>
+        </div>
+        <div class="sequence-diagram">
+          <pre class="mermaid">
+            sequenceDiagram
+                participant David as David Kim (Pro Trader)
+                participant TradingUI as Professional Trading UI
+                participant ExAPI as Exchange API
+                participant Engine as Exchange Engine
+                participant Market as Market Service
+                participant WebSocket as WebSocket Service
+                participant Risk as Risk Management
+                participant TradingView as TradingView Charts
+                participant Portfolio as Portfolio Service
+
+                %% 1. Market Analysis Setup
+                David->>TradingUI: Open professional trading interface
+                TradingUI->>Market: GET /symbol-thumb-trend
+                Market-->>TradingUI: Return all pairs with trend data
+                TradingUI->>WebSocket: Subscribe to multiple pairs (BTC/USDT, ETH/USDT)
+                WebSocket-->>TradingUI: WebSocket connected: real-time feeds active
+                TradingUI->>TradingView: Load advanced charting for BTC/USDT
+                TradingView-->>TradingUI: Display professional charts with indicators
+                
+                %% 2. Portfolio Assessment
+                David->>TradingUI: Review current portfolio
+                TradingUI->>ExAPI: GET /account/wallet
+                ExAPI-->>TradingUI: Portfolio: 5.5 BTC, 85 ETH, 125,000 USDT
+                TradingUI->>Portfolio: Calculate portfolio value and P&L
+                Portfolio-->>TradingUI: Total value: $487,250 (+2.3% today)
+
+                %% 3. Opportunity Identification
+                WebSocket->>TradingUI: Price update: BTC/USDT 43,200 (down 1.2%)
+                WebSocket->>TradingUI: Price update: ETH/USDT 2,580 (down 0.8%)
+                David->>TradingUI: Identify arbitrage opportunity
+                TradingUI->>Market: GET /exchange-plate-full (BTC/USDT, ETH/USDT)
+                Market-->>TradingUI: Order book depth data
+                TradingUI-->>David: Display: BTC oversold, ETH shows support
+
+                %% 4. Risk Assessment
+                David->>TradingUI: Check position limits
+                TradingUI->>Risk: Validate trading limits for strategy
+                Risk-->>TradingUI: Available: 200,000 USDT trading capacity
+                TradingUI->>Risk: Calculate maximum position sizes
+                Risk-->>TradingUI: Max BTC position: 4.6 BTC, Max ETH: 77.5 ETH
+
+                %% 5. Multi-Pair Order Strategy
+                David->>TradingUI: Place BTC buy limit order (1.5 BTC at 43,000)
+                TradingUI->>ExAPI: POST /order/add (BTC/USDT limit buy)
+                ExAPI->>Engine: Submit order to BTC/USDT engine
+                Engine->>Engine: Validate and add to order book
+                Engine-->>ExAPI: Order placed (ID: BTC001)
+                
+                David->>TradingUI: Place ETH buy limit order (25 ETH at 2,575)
+                TradingUI->>ExAPI: POST /order/add (ETH/USDT limit buy)
+                ExAPI->>Engine: Submit order to ETH/USDT engine
+                Engine->>Engine: Add to ETH order book
+                Engine-->>ExAPI: Order placed (ID: ETH001)
+
+                %% 6. Stop-Loss Protection Setup
+                David->>TradingUI: Set stop-loss orders as protection
+                TradingUI->>ExAPI: POST /order/add (BTC stop-loss: 1 BTC at 42,500)
+                ExAPI->>Engine: Create conditional stop order
+                Engine-->>ExAPI: Stop-loss order created (ID: BTC-SL001)
+                
+                TradingUI->>ExAPI: POST /order/add (ETH stop-loss: 20 ETH at 2,550)
+                ExAPI->>Engine: Create conditional stop order
+                Engine-->>ExAPI: Stop-loss order created (ID: ETH-SL001)
+
+                %% 7. Partial Fill Execution
+                Engine->>Engine: BTC market movement - partial fill (0.8 BTC at 43,000)
+                Engine->>WebSocket: Publish trade execution
+                WebSocket->>TradingUI: Trade notification: Partial fill BTC order
+                TradingUI-->>David: Alert: 0.8 BTC purchased, 0.7 BTC remaining
+
+                Engine->>Engine: ETH order fully filled (25 ETH at 2,575)
+                Engine->>WebSocket: Publish trade execution
+                WebSocket->>TradingUI: Trade notification: ETH order completed
+                TradingUI-->>David: Alert: 25 ETH purchased successfully
+
+                %% 8. Dynamic Order Management
+                David->>TradingUI: Modify remaining BTC order (adjust price to 42,950)
+                TradingUI->>ExAPI: PUT /order/update (BTC001)
+                ExAPI->>Engine: Cancel and replace order
+                Engine->>Engine: Remove from order book, add new order
+                Engine-->>ExAPI: Order updated (new ID: BTC002)
+                
+                %% 9. Market Data Monitoring
+                WebSocket->>TradingUI: Real-time updates: BTC recovering, ETH stabilizing
+                TradingUI->>Market: GET /latest-trade (both pairs)
+                Market-->>TradingUI: Recent trade history
+                TradingUI->>TradingView: Update charts with latest data
+                TradingView-->>TradingUI: Technical indicators showing bullish reversal
+
+                %% 10. Profit Taking Strategy
+                David->>TradingUI: Place profit-taking sell orders
+                TradingUI->>ExAPI: POST /order/add (ETH sell: 10 ETH at 2,620)
+                ExAPI->>Engine: Submit ETH sell order
+                Engine->>Engine: Match against buy orders
+                Engine->>Engine: Immediate execution (10 ETH at 2,620)
+                Engine->>WebSocket: Publish execution
+                WebSocket->>TradingUI: Profit taken: +450 USDT on ETH trade
+
+                %% 11. Portfolio Rebalancing
+                TradingUI->>Portfolio: Calculate updated portfolio metrics
+                Portfolio->>Portfolio: P&L analysis across all positions
+                Portfolio-->>TradingUI: Updated P&L: +1,245 USDT today
+                David->>TradingUI: Review performance analytics
+                TradingUI-->>David: Display: 18 trades, 85% win rate, +0.26% portfolio gain
+
+                %% 12. Risk Monitoring and Alerts
+                Risk->>Risk: Monitor position exposure and market volatility
+                Risk->>TradingUI: Daily risk report
+                TradingUI-->>David: Risk summary: Positions within limits, VaR: 2.1%
+                David->>TradingUI: Set up price alerts for overnight monitoring
+                TradingUI->>WebSocket: Configure alert thresholds
+                WebSocket-->>TradingUI: Alerts configured: BTC>44,000, ETH<2,500
+          </pre>
+        </div>
+        <div class="section-title">Journey Steps:</div>
+        <div class="journey-steps">
+          <details>
+            <summary>1. Professional Trading Environment Setup</summary>
+            <ul>
+              <li><b>Actor:</b> David Kim & Trading Infrastructure</li>
+              <li><b>Activity:</b> Initializes advanced trading interface with real-time data feeds</li>
+              <li><b>Technical:</b> WebSocket connections, TradingView integration, multi-pair monitoring</li>
+              <li><b>System Components:</b> Trading UI → WebSocket Service → Market Service</li>
+              <li><b>Business Rules:</b> Professional traders get advanced UI, real-time data priority</li>
+            </ul>
+          </details>
+          <details>
+            <summary>2. Portfolio Valuation and Assessment</summary>
+            <ul>
+              <li><b>Actor:</b> Portfolio Service & David</li>
+              <li><b>Activity:</b> Calculates total portfolio value: $487,250 across multiple assets</li>
+              <li><b>Technical:</b> Real-time pricing, cross-asset valuation, P&L calculations</li>
+              <li><b>System Components:</b> Portfolio Service → Market data → Wallet balances</li>
+              <li><b>Business Rules:</b> Mark-to-market valuation, realized vs unrealized gains</li>
+            </ul>
+          </details>
+          <details>
+            <summary>3. Market Opportunity Analysis</summary>
+            <ul>
+              <li><b>Actor:</b> David & Market Analysis Tools</li>
+              <li><b>Activity:</b> Identifies arbitrage opportunity: BTC oversold, ETH at support</li>
+              <li><b>Technical:</b> Technical indicators, order book analysis, trend identification</li>
+              <li><b>System Components:</b> TradingView charts → Market Service → Real-time data</li>
+              <li><b>Business Rules:</b> Professional traders access full market depth data</li>
+            </ul>
+          </details>
+          <details>
+            <summary>4. Risk Management Pre-Checks</summary>
+            <ul>
+              <li><b>Actor:</b> Risk Management System</li>
+              <li><b>Activity:</b> Validates position limits: 200,000 USDT available trading capacity</li>
+              <li><b>Technical:</b> Position sizing algorithms, risk exposure calculations</li>
+              <li><b>System Components:</b> Risk Management → Portfolio limits → Exchange API</li>
+              <li><b>Business Rules:</b> Maximum position sizes enforced, leverage limits applied</li>
+            </ul>
+          </details>
+          <details>
+            <summary>5. Multi-Asset Order Placement</summary>
+            <ul>
+              <li><b>Actor:</b> David & Exchange Engine</li>
+              <li><b>Activity:</b> Places simultaneous limit orders: 1.5 BTC at 43,000 and 25 ETH at 2,575</li>
+              <li><b>Technical:</b> Dual-engine processing, order validation, balance allocation</li>
+              <li><b>System Components:</b> Exchange API → Multiple matching engines</li>
+              <li><b>Business Rules:</b> Each trading pair has independent matching logic</li>
+            </ul>
+          </details>
+          <details>
+            <summary>6. Automated Risk Protection</summary>
+            <ul>
+              <li><b>Actor:</b> David & Risk Management</li>
+              <li><b>Activity:</b> Sets stop-loss orders: BTC at 42,500, ETH at 2,550</li>
+              <li><b>Technical:</b> Conditional order logic, automated triggering systems</li>
+              <li><b>System Components:</b> Exchange Engine → Conditional order management</li>
+              <li><b>Business Rules:</b> Stop-losses execute automatically on price triggers</li>
+            </ul>
+          </details>
+          <details>
+            <summary>7. Order Execution and Partial Fills</summary>
+            <ul>
+              <li><b>Actor:</b> Exchange Engine</li>
+              <li><b>Activity:</b> Executes partial BTC fill (0.8/1.5 BTC) and complete ETH fill (25 ETH)</li>
+              <li><b>Technical:</b> Price-time priority matching, partial execution handling</li>
+              <li><b>System Components:</b> Matching engines → Balance updates → WebSocket notifications</li>
+              <li><b>Business Rules:</b> Best execution guarantee, immediate balance updates</li>
+            </ul>
+          </details>
+          <details>
+            <summary>8. Dynamic Order Modification</summary>
+            <ul>
+              <li><b>Actor:</b> David & Exchange API</li>
+              <li><b>Activity:</b> Adjusts remaining BTC order price from 43,000 to 42,950</li>
+              <li><b>Technical:</b> Order cancellation and replacement in atomic operation</li>
+              <li><b>System Components:</b> Exchange API → Engine order book management</li>
+              <li><b>Business Rules:</b> Order modifications preserve queue position when possible</li>
+            </ul>
+          </details>
+          <details>
+            <summary>9. Real-Time Market Monitoring</summary>
+            <ul>
+              <li><b>Actor:</b> WebSocket Service & TradingView</li>
+              <li><b>Activity:</b> Streams live price updates and technical indicator changes</li>
+              <li><b>Technical:</b> Low-latency WebSocket feeds, chart data synchronization</li>
+              <li><b>System Components:</b> WebSocket streams → TradingView → Technical indicators</li>
+              <li><b>Business Rules:</b> Professional traders get priority data feed access</li>
+            </ul>
+          </details>
+          <details>
+            <summary>10. Profit Realization Strategy</summary>
+            <ul>
+              <li><b>Actor:</b> David & Exchange Engine</li>
+              <li><b>Activity:</b> Executes profit-taking sale: 10 ETH at 2,620 for +450 USDT gain</li>
+              <li><b>Technical:</b> Market order immediate execution, profit calculation</li>
+              <li><b>System Components:</b> Exchange Engine → Immediate matching → P&L updates</li>
+              <li><b>Business Rules:</b> Realized gains immediately reflected in available balance</li>
+            </ul>
+          </details>
+          <details>
+            <summary>11. Performance Analytics and Review</summary>
+            <ul>
+              <li><b>Actor:</b> Portfolio Service</li>
+              <li><b>Activity:</b> Calculates session performance: 18 trades, 85% win rate, +1,245 USDT</li>
+              <li><b>Technical:</b> Trade analytics, win/loss ratios, portfolio performance metrics</li>
+              <li><b>System Components:</b> Portfolio Service → Trade history → Performance calculations</li>
+              <li><b>Business Rules:</b> Professional analytics include advanced metrics and ratios</li>
+            </ul>
+          </details>
+          <details>
+            <summary>12. Risk Monitoring and Alert Configuration</summary>
+            <ul>
+              <li><b>Actor:</b> Risk Management & David</li>
+              <li><b>Activity:</b> Sets up overnight monitoring: BTC>44,000 and ETH<2,500 alerts</li>
+              <li><b>Technical:</b> Price threshold monitoring, automated alert generation</li>
+              <li><b>System Components:</b> Risk Management → WebSocket alerts → Notification services</li>
+              <li><b>Business Rules:</b> 24/7 monitoring for professional traders, customizable alerts</li>
+            </ul>
+          </details>
+        </div>
+        <details class="glossary">
+          <summary>Glossary</summary>
+          <ul>
+            <li><b>Arbitrage</b>: Trading strategy exploiting price differences between assets or markets.</li>
+            <li><b>Conditional Orders</b>: Orders that execute automatically when specific conditions are met.</li>
+            <li><b>Exchange Engine</b>: High-performance matching system processing orders for each trading pair.</li>
+            <li><b>Market Depth</b>: Order book liquidity showing buy and sell orders at various price levels.</li>
+            <li><b>Partial Fill</b>: Order execution where only part of the requested amount is immediately matched.</li>
+            <li><b>Portfolio Service</b>: System calculating real-time portfolio valuations and performance metrics.</li>
+            <li><b>Position Sizing</b>: Risk management technique determining appropriate trade sizes.</li>
+            <li><b>Price-Time Priority</b>: Order matching algorithm prioritizing best price first, then timestamp.</li>
+            <li><b>Professional Trading UI</b>: Advanced interface with real-time data, charts, and order management.</li>
+            <li><b>P&L (Profit and Loss)</b>: Financial metric showing trading gains and losses over time.</li>
+            <li><b>Risk Management System</b>: Automated monitoring and enforcement of trading limits and exposures.</li>
+            <li><b>Stop-Loss Order</b>: Risk management order that sells automatically when price drops to specified level.</li>
+            <li><b>TradingView Integration</b>: Professional charting platform with technical analysis tools.</li>
+            <li><b>VaR (Value at Risk)</b>: Statistical measure of potential portfolio loss over specific time period.</li>
+            <li><b>WebSocket</b>: Real-time communication protocol for instant price updates and notifications.</li>
+          </ul>
+        </details>
+      </details>
+    </section>
+    
+    <!-- Scenario 4 -->
+    <section class="scenario-card">
+      <details>
+        <summary>4. Secure Cryptocurrency Withdrawal with Multi-Factor Authentication</summary>
+        <div class="scenario-header">
+          <span class="goal">Execute high-value cryptocurrency withdrawal with comprehensive security verification, multi-factor authentication, address validation, and admin approval workflow.</span>
+        </div>
+        <div class="desc">This scenario follows Michael Rodriguez, a Bitcoin investor from Mexico City, who needs to withdraw 2.5 BTC to his hardware wallet after selling positions. The withdrawal triggers enhanced security protocols including multi-factor authentication, withdrawal address verification, admin approval due to amount threshold, and blockchain transaction processing.</div>
+        <div class="section-title">Key System Components:</div>
+        <ul>
+          <li>User Center API - Withdrawal request processing and security verification</li>
+          <li>Wallet Service - Address validation and blockchain transaction management</li>
+          <li>Multi-Factor Authentication - SMS, email, and trading password verification</li>
+          <li>Admin Approval System - Manual review for high-value withdrawals</li>
+          <li>Bitcoin RPC Service - Blockchain integration and transaction broadcasting</li>
+          <li>Risk Management - Fraud detection and withdrawal pattern analysis</li>
+        </ul>
+        <div class="section-title">Key Actors:</div>
+        <ul>
+          <li><b>Michael Rodriguez</b> - Bitcoin investor in Mexico City with 2.5 BTC to withdraw</li>
+          <li><b>Bizzan Security System</b> - Multi-layer authentication and fraud prevention</li>
+          <li><b>Admin Review Team</b> - Human operators reviewing high-value transactions</li>
+          <li><b>Bitcoin Network</b> - Blockchain infrastructure for transaction processing</li>
+          <li><b>SMS Provider</b> - International SMS delivery for mobile verification</li>
+          <li><b>Hardware Wallet</b> - Michael's Ledger device with secure BTC address</li>
+        </ul>
+        <div class="section-title">Sequence Diagram:</div>
+        <div class="sequence-controls">
+          <button id="zoom-in-3" class="zoom-btn">Zoom In</button>
+          <button id="zoom-out-3" class="zoom-btn">Zoom Out</button>
+          <button id="reset-3" class="zoom-btn reset-btn">Reset</button>
+        </div>
+        <div class="sequence-diagram">
+          <pre class="mermaid">
+            sequenceDiagram
+                participant Michael as Michael Rodriguez
+                participant WebApp as Bizzan Web App
+                participant UCAPI as User Center API
+                participant Core as Core Module
+                participant WalletSvc as Wallet Service
+                participant SMS as SMS Provider
+                participant Email as Email Service
+                participant Admin as Admin Review Team
+                participant Risk as Risk Management
+                participant BTCRPC as Bitcoin RPC Service
+                participant BTCNetwork as Bitcoin Network
+                participant Ledger as Hardware Wallet
+
+                %% 1. Withdrawal Initiation
+                Michael->>WebApp: Navigate to withdrawal section
+                WebApp->>UCAPI: GET /asset/wallet/BTC
+                UCAPI-->>WebApp: BTC balance: 2.85 BTC available
+                WebApp-->>Michael: Display BTC wallet (2.85 BTC available)
+                Michael->>WebApp: Initiate withdrawal (2.5 BTC)
+                WebApp->>UCAPI: GET /withdraw/support/coin/info
+                UCAPI-->>WebApp: BTC withdrawal info (min: 0.01, max: 10, fee: 0.0005)
+
+                %% 2. Address Management
+                Michael->>Ledger: Generate new receiving address
+                Ledger-->>Michael: Address: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
+                Michael->>WebApp: Add withdrawal address
+                WebApp->>UCAPI: POST /withdraw/address/add
+                Note over UCAPI: Address: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh<br/>Label: "Ledger Hardware Wallet"<br/>Requires verification code
+                UCAPI->>SMS: Send address verification code (+52-55-1234-5678)
+                SMS-->>Michael: SMS: "Address verification code: 789012"
+                Michael->>WebApp: Enter verification code
+                WebApp->>UCAPI: Verify code and save address
+                UCAPI-->>WebApp: Address added successfully
+
+                %% 3. Withdrawal Request Submission
+                Michael->>WebApp: Submit withdrawal request
+                Note over WebApp: Amount: 2.5 BTC<br/>Address: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh<br/>Network fee: 0.0005 BTC<br/>Total deducted: 2.5005 BTC
+                WebApp->>UCAPI: POST /withdraw/apply/code
+                UCAPI->>Risk: Analyze withdrawal pattern
+                Risk->>Risk: Check: Amount >2 BTC, New address, Mexico IP
+                Risk-->>UCAPI: Risk score: MEDIUM (requires enhanced verification)
+                
+                %% 4. Multi-Factor Authentication
+                UCAPI->>SMS: Send withdrawal verification code
+                SMS-->>Michael: SMS: "Withdrawal verification: 456789"
+                UCAPI->>Email: Send withdrawal confirmation email
+                Email-->>Michael: Email: "Confirm 2.5 BTC withdrawal to bc1qxy2..."
+                Michael->>WebApp: Enter SMS code + trading password
+                WebApp->>UCAPI: Verify SMS code (456789) and trading password
+                UCAPI->>UCAPI: Validate all security factors
+                Michael->>Email: Click email confirmation link
+                Email->>UCAPI: Email verification confirmed
+                UCAPI-->>WebApp: All verifications completed
+
+                %% 5. Address Validation and Risk Assessment
+                UCAPI->>WalletSvc: Validate Bitcoin address format
+                WalletSvc->>BTCRPC: Validate address (bc1qxy2...)
+                BTCRPC-->>WalletSvc: Valid P2WPKH address confirmed
+                WalletSvc->>Risk: Check address against blacklists
+                Risk-->>WalletSvc: Address clean (not blacklisted)
+                WalletSvc-->>UCAPI: Address validation passed
+
+                %% 6. Admin Approval Trigger
+                UCAPI->>Core: Create withdrawal record (ID: WD789012)
+                Core->>Core: Check amount: 2.5 BTC > 1 BTC threshold
+                Core->>Admin: Queue for manual review
+                Note over Admin: Withdrawal WD789012<br/>User: Michael Rodriguez (Mexico)<br/>Amount: 2.5 BTC<br/>Destination: New address<br/>Risk: MEDIUM
+                Admin->>Admin: Review user history, KYC documents
+                Admin->>Core: Check trading history and account status
+                Core-->>Admin: Account: 18 months old, verified, good standing
+                Admin->>Admin: Approve withdrawal
+                Admin->>Core: Update status to APPROVED
+                Core->>SMS: Notify user of approval
+                SMS-->>Michael: SMS: "Withdrawal approved, processing soon"
+
+                %% 7. Balance Validation and Freezing
+                Core->>Core: Final balance check (2.85 BTC available)
+                Core->>Core: Freeze 2.5005 BTC (amount + fee)
+                Core->>Core: Update balance (Available: 0.3495 BTC, Frozen: 2.5005 BTC)
+                Core->>WalletSvc: Trigger withdrawal processing
+
+                %% 8. Bitcoin Transaction Creation
+                WalletSvc->>BTCRPC: Create transaction
+                Note over BTCRPC: From: Hot wallet<br/>To: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh<br/>Amount: 2.5 BTC<br/>Fee: 0.0005 BTC (20 sat/vB)
+                BTCRPC->>BTCRPC: Select UTXOs from hot wallet
+                BTCRPC->>BTCRPC: Create and sign transaction
+                BTCRPC-->>WalletSvc: Raw transaction ready
+
+                %% 9. Blockchain Broadcasting
+                WalletSvc->>BTCRPC: Broadcast transaction
+                BTCRPC->>BTCNetwork: Submit transaction to mempool
+                BTCNetwork-->>BTCRPC: TX accepted (txid: a1b2c3d4e5f6...)
+                BTCRPC-->>WalletSvc: Transaction broadcasted
+                WalletSvc->>Core: Update withdrawal status to BROADCASTED
+                Core->>SMS: Send broadcast notification
+                SMS-->>Michael: SMS: "BTC withdrawal broadcasted: a1b2c3d4e5f6..."
+
+                %% 10. Transaction Confirmation
+                BTCNetwork->>BTCNetwork: Include in block (height: 820,451)
+                BTCNetwork->>BTCRPC: Block confirmation received
+                BTCRPC->>WalletSvc: Transaction confirmed (1 confirmation)
+                WalletSvc->>Core: Update status to CONFIRMED
+                Core->>Core: Release frozen amount from balance
+                Core->>SMS: Send completion notification
+                SMS-->>Michael: SMS: "2.5 BTC withdrawal completed successfully"
+
+                %% 11. Final Verification
+                Michael->>Ledger: Check received balance
+                Ledger-->>Michael: Confirmed: +2.5 BTC received
+                Michael->>WebApp: View withdrawal history
+                WebApp->>UCAPI: GET /withdraw/record
+                UCAPI-->>WebApp: Show completed withdrawal
+                WebApp-->>Michael: Status: COMPLETED (txid: a1b2c3d4e5f6...)
+          </pre>
+        </div>
+        <div class="section-title">Journey Steps:</div>
+        <div class="journey-steps">
+          <details>
+            <summary>1. Withdrawal Interface and Balance Check</summary>
+            <ul>
+              <li><b>Actor:</b> Michael & User Center API</li>
+              <li><b>Activity:</b> Accesses withdrawal interface, confirms 2.85 BTC available balance</li>
+              <li><b>Technical:</b> Real-time balance query, withdrawal limits and fee display</li>
+              <li><b>System Components:</b> User Center API → Core Module → Wallet balances</li>
+              <li><b>Business Rules:</b> Shows available balance minus any frozen amounts</li>
+            </ul>
+          </details>
+          <details>
+            <summary>2. Hardware Wallet Address Generation</summary>
+            <ul>
+              <li><b>Actor:</b> Michael & Ledger Hardware Wallet</li>
+              <li><b>Activity:</b> Generates secure receiving address on hardware wallet</li>
+              <li><b>Technical:</b> BIP84 P2WPKH address generation, offline private key security</li>
+              <li><b>System Components:</b> Hardware wallet → Secure element → Address derivation</li>
+              <li><b>Business Rules:</b> Users encouraged to use unique addresses for each withdrawal</li>
+            </ul>
+          </details>
+          <details>
+            <summary>3. Address Verification and Whitelisting</summary>
+            <ul>
+              <li><b>Actor:</b> User Center API & SMS Provider</li>
+              <li><b>Activity:</b> Adds new withdrawal address with SMS verification requirement</li>
+              <li><b>Technical:</b> Address format validation, SMS code generation, address storage</li>
+              <li><b>System Components:</b> User Center API → SMS Gateway → Address database</li>
+              <li><b>Business Rules:</b> New addresses require verification, stored for future use</li>
+            </ul>
+          </details>
+          <details>
+            <summary>4. Risk Assessment and Scoring</summary>
+            <ul>
+              <li><b>Actor:</b> Risk Management System</li>
+              <li><b>Activity:</b> Evaluates withdrawal risk: large amount, new address, geographic factors</li>
+              <li><b>Technical:</b> Machine learning risk models, pattern recognition, scoring algorithms</li>
+              <li><b>System Components:</b> Risk Management → Historical data → Fraud detection</li>
+              <li><b>Business Rules:</b> Medium/High risk withdrawals require enhanced verification</li>
+            </ul>
+          </details>
+          <details>
+            <summary>5. Multi-Factor Authentication Process</summary>
+            <ul>
+              <li><b>Actor:</b> Michael & Authentication Services</li>
+              <li><b>Activity:</b> Completes SMS, email, and trading password verification</li>
+              <li><b>Technical:</b> Three-factor authentication, time-limited codes, secure password hashing</li>
+              <li><b>System Components:</b> SMS Provider → Email Service → Authentication engine</li>
+              <li><b>Business Rules:</b> All three factors required for high-value withdrawals</li>
+            </ul>
+          </details>
+          <details>
+            <summary>6. Bitcoin Address Technical Validation</summary>
+            <ul>
+              <li><b>Actor:</b> Wallet Service & Bitcoin RPC</li>
+              <li><b>Activity:</b> Validates address format, checks against blacklists</li>
+              <li><b>Technical:</b> Base58/Bech32 format validation, UTXO verification, blacklist checking</li>
+              <li><b>System Components:</b> Wallet Service → Bitcoin RPC → Risk databases</li>
+              <li><b>Business Rules:</b> Prevents withdrawals to known malicious addresses</li>
+            </ul>
+          </details>
+          <details>
+            <summary>7. Administrative Review and Approval</summary>
+            <ul>
+              <li><b>Actor:</b> Admin Review Team</li>
+              <li><b>Activity:</b> Human review of 2.5 BTC withdrawal due to threshold limits</li>
+              <li><b>Technical:</b> Admin dashboard, user history review, manual approval workflow</li>
+              <li><b>System Components:</b> Admin interface → Core Module → User records</li>
+              <li><b>Business Rules:</b> Withdrawals >1 BTC require human approval during business hours</li>
+            </ul>
+          </details>
+          <details>
+            <summary>8. Balance Freezing and Transaction Preparation</summary>
+            <ul>
+              <li><b>Actor:</b> Core Module</li>
+              <li><b>Activity:</b> Freezes 2.5005 BTC (including 0.0005 BTC network fee)</li>
+              <li><b>Technical:</b> Atomic balance updates, frozen amount tracking</li>
+              <li><b>System Components:</b> Core Module → Database transactions → Balance management</li>
+              <li><b>Business Rules:</b> Funds frozen until transaction confirmation or cancellation</li>
+            </ul>
+          </details>
+          <details>
+            <summary>9. Bitcoin Transaction Creation and Signing</summary>
+            <ul>
+              <li><b>Actor:</b> Bitcoin RPC Service</li>
+              <li><b>Activity:</b> Creates Bitcoin transaction from hot wallet to destination address</li>
+              <li><b>Technical:</b> UTXO selection, transaction construction, multi-signature signing</li>
+              <li><b>System Components:</b> Bitcoin RPC → Hot wallet → Transaction builder</li>
+              <li><b>Business Rules:</b> Optimal fee calculation for timely confirmation</li>
+            </ul>
+          </details>
+          <details>
+            <summary>10. Blockchain Broadcasting and Monitoring</summary>
+            <ul>
+              <li><b>Actor:</b> Bitcoin RPC & Bitcoin Network</li>
+              <li><b>Activity:</b> Broadcasts transaction to Bitcoin network, monitors for confirmations</li>
+              <li><b>Technical:</b> P2P network propagation, mempool acceptance, block inclusion</li>
+              <li><b>System Components:</b> Bitcoin RPC → Bitcoin nodes → Blockchain network</li>
+              <li><b>Business Rules:</b> Transaction must be included in blockchain within reasonable time</li>
+            </ul>
+          </details>
+          <details>
+            <summary>11. Confirmation and Completion</summary>
+            <ul>
+              <li><b>Actor:</b> Wallet Service & Core Module</li>
+              <li><b>Activity:</b> Confirms transaction inclusion in block, releases frozen balance</li>
+              <li><b>Technical:</b> Block confirmation monitoring, balance finalization, status updates</li>
+              <li><b>System Components:</b> Wallet Service → Core Module → Notification services</li>
+              <li><b>Business Rules:</b> Single confirmation sufficient for withdrawal completion</li>
+            </ul>
+          </details>
+          <details>
+            <summary>12. User Verification and History Recording</summary>
+            <ul>
+              <li><b>Actor:</b> Michael & Transaction History</li>
+              <li><b>Activity:</b> Verifies receipt on hardware wallet, reviews transaction history</li>
+              <li><b>Technical:</b> Hardware wallet balance update, transaction log maintenance</li>
+              <li><b>System Components:</b> Hardware wallet → Transaction history → Audit trail</li>
+              <li><b>Business Rules:</b> Complete audit trail maintained for regulatory compliance</li>
+            </ul>
+          </details>
+        </div>
+        <details class="glossary">
+          <summary>Glossary</summary>
+          <ul>
+            <li><b>Admin Review Team</b>: Human operators who manually review high-value or suspicious transactions.</li>
+            <li><b>Bech32</b>: Bitcoin address format for SegWit addresses, starting with 'bc1' for mainnet.</li>
+            <li><b>Bitcoin RPC Service</b>: Interface for communicating with Bitcoin Core node for blockchain operations.</li>
+            <li><b>BIP84</b>: Bitcoin Improvement Proposal defining derivation paths for native SegWit addresses.</li>
+            <li><b>Frozen Balance</b>: Temporarily locked funds that cannot be used while withdrawal is processing.</li>
+            <li><b>Hardware Wallet</b>: Physical device storing private keys offline for enhanced security.</li>
+            <li><b>Hot Wallet</b>: Exchange-controlled wallet connected to the internet for immediate liquidity.</li>
+            <li><b>Multi-Factor Authentication</b>: Security requiring multiple verification methods (SMS, email, password).</li>
+            <li><b>P2WPKH</b>: Pay-to-Witness-PubkeyHash, SegWit address type for reduced transaction fees.</li>
+            <li><b>Risk Management</b>: Automated system analyzing transaction patterns for fraud prevention.</li>
+            <li><b>Satoshi per vByte (sat/vB)</b>: Bitcoin fee rate unit measuring cost per virtual byte.</li>
+            <li><b>Trading Password</b>: Secondary password required for financial operations like withdrawals.</li>
+            <li><b>UTXO</b>: Unspent Transaction Output, the fundamental unit of Bitcoin accounting.</li>
+            <li><b>Withdrawal Threshold</b>: Amount limit requiring additional approval or verification procedures.</li>
+          </ul>
+        </details>
+      </details>
+    </section>
+    
+  </div>
+</body>
+</html>

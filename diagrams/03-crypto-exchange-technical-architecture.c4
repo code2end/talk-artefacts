@@ -1,0 +1,302 @@
+specification {
+  element tech_service {
+    style {
+      color blue
+      shape rectangle
+    }
+  }
+  element tech_api {
+    style {
+      color lightblue
+      shape rectangle
+    }
+  }
+  element tech_engine {
+    style {
+      color darkblue
+      shape rectangle
+    }
+  }
+  element tech_database {
+    style {
+      color green
+      shape cylinder
+    }
+  }
+  element tech_cache {
+    style {
+      color lightgreen
+      shape cylinder
+    }
+  }
+  element tech_messaging {
+    style {
+      color orange
+      shape queue
+    }
+  }
+  element tech_blockchain {
+    style {
+      color purple
+      shape cylinder
+    }
+  }
+  element tech_frontend {
+    style {
+      color cyan
+      shape rectangle
+    }
+  }
+  element tech_infrastructure {
+    style {
+      color gray
+      shape rectangle
+    }
+  }
+  element tech_external {
+    style {
+      color darkgray
+      shape rectangle
+    }
+  }
+}
+
+model {
+  // Frontend Applications
+  web_frontend = tech_frontend "Web Frontend Portal" {
+    description "Vue.js single-page application for retail traders with TradingView charts and responsive design"
+  }
+  
+  web_admin = tech_frontend "Web Admin Portal" {
+    description "Vue.js administration dashboard for exchange operators with iView UI components"
+  }
+  
+  mobile_apps = tech_frontend "Mobile Applications" {
+    description "Native Android and iOS applications for mobile trading and account management"
+  }
+
+  // API Gateway & Load Balancing
+  api_gateway = tech_infrastructure "API Gateway / Load Balancer" {
+    description "Nginx-based load balancer with API routing, rate limiting, and SSL termination"
+  }
+
+  // Core API Services
+  ucenter_api = tech_api "User Center API" {
+    description "Spring Boot microservice handling authentication, user management, wallet operations, and withdrawals"
+  }
+  
+  exchange_api = tech_api "Exchange API" {
+    description "Spring Boot REST API for spot trading operations, order management, and portfolio queries"
+  }
+  
+  otc_api = tech_api "OTC Trading API" {
+    description "Spring Boot microservice for peer-to-peer trading marketplace and advertisement management"
+  }
+  
+  market_api = tech_api "Market Data API" {
+    description "Spring Boot service providing real-time market data, K-line charts, and trading statistics via REST and WebSocket"
+  }
+
+  // Core Business Services
+  core_module = tech_service "Core Business Module" {
+    description "Shared Spring Boot library containing business entities, services, and data access layers used by all microservices"
+  }
+  
+  exchange_engine = tech_engine "Exchange Matching Engine" {
+    description "High-performance in-memory order matching engine with concurrent processing per trading pair"
+  }
+  
+  market_service = tech_service "Market Data Processing Service" {
+    description "Real-time market data processor generating K-line charts, statistics, and broadcasting updates via Kafka"
+  }
+  
+  wallet_service = tech_service "Wallet Management Service" {
+    description "Multi-cryptocurrency wallet service managing addresses, balances, and blockchain integrations"
+  }
+
+  // Wallet RPC Services
+  bitcoin_rpc = tech_service "Bitcoin RPC Service" {
+    description "Bitcoin Core RPC integration for BTC address generation, balance queries, and transaction broadcasting"
+  }
+  
+  ethereum_rpc = tech_service "Ethereum RPC Service" {
+    description "Web3 Ethereum integration supporting ETH and ERC-20 tokens including USDT smart contracts"
+  }
+  
+  altcoin_rpc = tech_service "Alternative Coin RPC Services" {
+    description "Multiple RPC integrations for Litecoin, Bitcoin Cash, EOS, Monero, and other supported cryptocurrencies"
+  }
+
+  // Database Layer
+  mysql_primary = tech_database "MySQL Primary Database" {
+    description "Main transactional database storing user accounts, orders, transactions, and system configuration with master-slave replication"
+  }
+  
+  mysql_replica = tech_database "MySQL Read Replicas" {
+    description "Read-only database replicas for scaling query operations and reducing load on primary database"
+  }
+  
+  mongodb = tech_database "MongoDB Analytics Database" {
+    description "Document database for K-line chart data, market analytics, and flexible schema requirements with time-series collections"
+  }
+  
+  redis_cluster = tech_cache "Redis Cache Cluster" {
+    description "In-memory data store for session management, market data caching, rate limiting, and real-time data distribution"
+  }
+
+  // Message Streaming
+  kafka_cluster = tech_messaging "Apache Kafka Message Broker" {
+    description "Distributed streaming platform handling trade events, order updates, market data, and cross-service communication"
+  }
+
+  // Blockchain Networks
+  bitcoin_network = tech_blockchain "Bitcoin Blockchain Network" {
+    description "Bitcoin network integration for BTC transactions, confirmations, and balance tracking"
+  }
+  
+  ethereum_network = tech_blockchain "Ethereum Blockchain Network" {
+    description "Ethereum network supporting ETH and ERC-20 token transactions with smart contract interaction"
+  }
+  
+  altcoin_networks = tech_blockchain "Alternative Cryptocurrency Networks" {
+    description "Multiple blockchain networks including Litecoin, Bitcoin Cash, EOS, Monero, and other supported altcoins"
+  }
+
+  // Infrastructure Services
+  eureka_registry = tech_infrastructure "Eureka Service Registry" {
+    description "Netflix Eureka service discovery enabling microservices registration, discovery, and load balancing"
+  }
+  
+  config_server = tech_infrastructure "Spring Cloud Config Server" {
+    description "Centralized configuration management for environment-specific properties across all microservices"
+  }
+  
+  elasticsearch = tech_infrastructure "Elasticsearch Cluster" {
+    description "Search and analytics engine for transaction mining, audit logs, and business intelligence queries"
+  }
+
+  // External Services
+  aliyun_oss = tech_external "Aliyun Cloud Storage" {
+    description "Object storage service for KYC documents, user avatars, and system assets with CDN distribution"
+  }
+  
+  sms_gateway = tech_external "SMS Gateway Services" {
+    description "Multi-provider SMS services for phone verification, 2FA codes, and security notifications"
+  }
+  
+  email_service = tech_external "SMTP Email Services" {
+    description "Email delivery infrastructure for user notifications, reports, and marketing communications"
+  }
+  
+  captcha_services = tech_external "CAPTCHA Services" {
+    description "Geetest and Tencent anti-bot protection services for registration, login, and withdrawal security"
+  }
+
+  // Frontend to API Gateway
+  web_frontend -> api_gateway "HTTPS requests with JWT authentication"
+  web_admin -> api_gateway "Administrative operations via HTTPS"
+  mobile_apps -> api_gateway "Mobile API requests with token authentication"
+
+  // API Gateway to Microservices
+  api_gateway -> ucenter_api "Routes user management and wallet operations"
+  api_gateway -> exchange_api "Routes trading and order management requests"
+  api_gateway -> otc_api "Routes P2P trading marketplace requests"
+  api_gateway -> market_api "Routes market data and chart requests"
+
+  // API Services to Core Business Layer
+  ucenter_api -> core_module "Uses shared business logic and entities (JPA/Spring Data)"
+  exchange_api -> exchange_engine "Submits orders to matching engine via Kafka"
+  otc_api -> core_module "Leverages shared business services and data access"
+  market_api -> market_service "Queries market data and subscribes to real-time updates"
+
+  // Core Services Integration
+  core_module -> mysql_primary "Primary database operations using Spring Data JPA"
+  core_module -> mysql_replica "Read-only operations for scaling query performance"
+  core_module -> redis_cluster "Caching, session storage, and rate limiting operations"
+  
+  exchange_engine -> kafka_cluster "Publishes trade events and order updates"
+  market_service -> mongodb "Stores and queries K-line data and market analytics"
+  market_service -> kafka_cluster "Consumes trade events and publishes market updates"
+
+  // Wallet Services to Blockchain Networks
+  wallet_service -> bitcoin_rpc "Bitcoin operations via RPC API"
+  wallet_service -> ethereum_rpc "Ethereum and ERC-20 token operations via Web3"
+  wallet_service -> altcoin_rpc "Alternative cryptocurrency operations via native RPC"
+  
+  bitcoin_rpc -> bitcoin_network "Bitcoin Core RPC integration"
+  ethereum_rpc -> ethereum_network "Web3 provider connection"
+  altcoin_rpc -> altcoin_networks "Multiple cryptocurrency network integrations"
+
+  // Infrastructure Services
+  ucenter_api -> eureka_registry "Service registration and discovery"
+  exchange_api -> eureka_registry "Service registration and discovery"
+  otc_api -> eureka_registry "Service registration and discovery"
+  market_api -> eureka_registry "Service registration and discovery"
+  
+  core_module -> config_server "Environment-specific configuration management"
+  market_service -> elasticsearch "Transaction mining and analytics queries"
+
+  // External Service Integrations
+  ucenter_api -> sms_gateway "SMS verification codes and notifications"
+  ucenter_api -> email_service "Email notifications and verification"
+  ucenter_api -> captcha_services "Bot protection for registration and login"
+  core_module -> aliyun_oss "File storage for KYC documents and assets"
+
+  // Data Flow Relationships
+  kafka_cluster -> market_service "Real-time trade event consumption"
+  kafka_cluster -> ucenter_api "Withdrawal processing events"
+  kafka_cluster -> wallet_service "Address generation and transaction events"
+  
+  redis_cluster -> web_frontend "Session management and real-time data"
+  mongodb -> market_api "Historical chart data and analytics queries"
+}
+
+views {
+  view tech_complete_architecture {
+    title "Complete Cryptocurrency Exchange Technical Architecture"
+    description "Full microservices architecture with all components, databases, messaging, and external integrations"
+    include *
+  }
+  
+  view tech_api_microservices {
+    title "API Microservices Layer"
+    description "Core API services handling user management, trading, OTC operations, and market data"
+    include web_frontend, web_admin, mobile_apps, api_gateway, ucenter_api, exchange_api, otc_api, market_api, core_module, eureka_registry
+  }
+  
+  view tech_trading_engine {
+    title "Trading Engine and Market Data Processing"
+    description "High-performance order matching, trade execution, and real-time market data generation"
+    include exchange_api, exchange_engine, market_service, market_api, kafka_cluster, mongodb, redis_cluster, web_frontend
+  }
+  
+  view tech_wallet_blockchain {
+    title "Wallet Services and Blockchain Integration"
+    description "Multi-cryptocurrency wallet management with blockchain network integrations"
+    include wallet_service, bitcoin_rpc, ethereum_rpc, altcoin_rpc, bitcoin_network, ethereum_network, altcoin_networks, ucenter_api, redis_cluster
+  }
+  
+  view tech_data_persistence {
+    title "Data Persistence and Caching Architecture"
+    description "Database, caching, and messaging infrastructure for data management"
+    include mysql_primary, mysql_replica, mongodb, redis_cluster, kafka_cluster, elasticsearch, core_module, market_service
+  }
+  
+  view tech_external_integrations {
+    title "External Service Integrations"
+    description "Integration with cloud services, communication providers, and security services"
+    include ucenter_api, aliyun_oss, sms_gateway, email_service, captcha_services, config_server, eureka_registry
+  }
+  
+  view tech_frontend_gateway {
+    title "Frontend Applications and API Gateway"
+    description "User interfaces and API gateway layer with routing and authentication"
+    include web_frontend, web_admin, mobile_apps, api_gateway, ucenter_api, exchange_api, otc_api, market_api
+  }
+  
+  view tech_infrastructure_services {
+    title "Infrastructure and Support Services"
+    description "Service discovery, configuration management, and operational infrastructure"
+    include eureka_registry, config_server, elasticsearch, kafka_cluster, redis_cluster, aliyun_oss
+  }
+}

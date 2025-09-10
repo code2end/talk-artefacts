@@ -1,0 +1,222 @@
+specification {
+  element ctx_person {
+    style {
+      color blue
+      shape person
+    }
+  }
+  element ctx_system {
+    style {
+      color green
+      shape rectangle
+    }
+  }
+  element ctx_external {
+    style {
+      color gray
+      shape rectangle
+    }
+  }
+  element ctx_blockchain {
+    style {
+      color orange
+      shape cylinder
+    }
+  }
+  element ctx_payment {
+    style {
+      color purple
+      shape rectangle
+    }
+  }
+  element ctx_infrastructure {
+    style {
+      color darkblue
+      shape rectangle
+    }
+  }
+}
+
+model {
+  // Primary Users
+  ctx_retail_traders = ctx_person "Retail Traders" {
+    description "Individual cryptocurrency traders using web and mobile applications for spot trading"
+  }
+  
+  ctx_institutional_traders = ctx_person "Institutional Traders" {
+    description "Professional trading firms and hedge funds using APIs for algorithmic trading"
+  }
+  
+  ctx_otc_traders = ctx_person "OTC Traders" {
+    description "High-volume traders using peer-to-peer marketplace for large transactions with fiat currencies"
+  }
+
+  // Administrative Users
+  ctx_exchange_admins = ctx_person "Exchange Administrators" {
+    description "Exchange operators managing system configuration, user verification, and compliance"
+  }
+  
+  ctx_customer_support = ctx_person "Customer Support" {
+    description "Support team handling user inquiries, KYC verification, and dispute resolution"
+  }
+  
+  ctx_compliance_officers = ctx_person "Compliance Officers" {
+    description "Regulatory compliance team managing KYC/AML processes and audit requirements"
+  }
+
+  // Core Bizzan System
+  ctx_bizzan_exchange = ctx_system "Bizzan Cryptocurrency Exchange Platform" {
+    description "Complete digital asset trading ecosystem with spot trading, OTC marketplace, and comprehensive wallet management"
+  }
+
+  // Blockchain Networks
+  ctx_bitcoin_network = ctx_blockchain "Bitcoin Network" {
+    description "Bitcoin blockchain for BTC deposits, withdrawals, and balance queries via RPC"
+  }
+  
+  ctx_ethereum_network = ctx_blockchain "Ethereum Network" {
+    description "Ethereum blockchain supporting ETH and ERC-20 tokens including USDT via Web3 RPC"
+  }
+  
+  ctx_altcoin_networks = ctx_blockchain "Alternative Cryptocurrency Networks" {
+    description "Multiple blockchain networks including Litecoin, Bitcoin Cash, EOS, Monero, and other supported cryptocurrencies"
+  }
+
+  // External Payment Systems
+  ctx_fiat_banks = ctx_payment "Banking Systems" {
+    description "Traditional banking networks for fiat currency deposits, withdrawals, and wire transfers"
+  }
+  
+  ctx_payment_processors = ctx_payment "Payment Processors" {
+    description "Third-party payment gateways for credit card processing and regional payment methods"
+  }
+
+  // Communication Services
+  ctx_sms_gateway = ctx_external "SMS Gateway Services" {
+    description "Multi-provider SMS services for phone verification, 2FA codes, and security notifications"
+  }
+  
+  ctx_email_service = ctx_external "Email Services" {
+    description "SMTP services for user notifications, KYC updates, and marketing communications"
+  }
+
+  // Security & Verification
+  ctx_kyc_providers = ctx_external "KYC/AML Service Providers" {
+    description "Identity verification services for regulatory compliance and anti-money laundering"
+  }
+  
+  ctx_captcha_services = ctx_external "CAPTCHA Services" {
+    description "Geetest and Tencent anti-bot services for registration and login protection"
+  }
+  
+  ctx_fraud_detection = ctx_external "Fraud Detection Systems" {
+    description "Anti-fraud and risk management systems for transaction monitoring"
+  }
+
+  // Infrastructure Services
+  ctx_cloud_storage = ctx_infrastructure "Cloud Storage" {
+    description "Aliyun OSS for document storage, KYC files, user avatars, and system assets"
+  }
+  
+  ctx_monitoring = ctx_infrastructure "Monitoring & Analytics" {
+    description "Application performance monitoring, business intelligence, and system analytics"
+  }
+
+  // External APIs & Data Feeds
+  ctx_price_feeds = ctx_external "Price Feed Services" {
+    description "External market data providers for exchange rates and cryptocurrency pricing"
+  }
+  
+  ctx_regulatory_databases = ctx_external "Regulatory Databases" {
+    description "Government databases for identity verification and compliance reporting"
+  }
+
+  // User Interactions with Core System
+  ctx_retail_traders -> ctx_bizzan_exchange "Trades cryptocurrencies via web and mobile apps"
+  ctx_institutional_traders -> ctx_bizzan_exchange "Executes high-volume trades via REST and WebSocket APIs"
+  ctx_otc_traders -> ctx_bizzan_exchange "Conducts P2P trading with fiat currencies through advertisement marketplace"
+  
+  // Administrative Interactions
+  ctx_exchange_admins -> ctx_bizzan_exchange "Manages system configuration, trading pairs, and operational parameters"
+  ctx_customer_support -> ctx_bizzan_exchange "Handles user support, verification processes, and dispute resolution"
+  ctx_compliance_officers -> ctx_bizzan_exchange "Monitors compliance, generates reports, and manages regulatory requirements"
+
+  // Blockchain Integrations
+  ctx_bizzan_exchange -> ctx_bitcoin_network "Generates addresses, monitors deposits, and broadcasts Bitcoin transactions"
+  ctx_bizzan_exchange -> ctx_ethereum_network "Manages ETH and ERC-20 tokens via Web3 integration"
+  ctx_bizzan_exchange -> ctx_altcoin_networks "Integrates with multiple cryptocurrency networks via native RPC clients"
+
+  // Payment System Integrations
+  ctx_bizzan_exchange -> ctx_fiat_banks "Processes wire transfers for fiat deposits and withdrawals"
+  ctx_bizzan_exchange -> ctx_payment_processors "Handles credit card payments and regional payment methods"
+  ctx_fiat_banks -> ctx_otc_traders "Executes fiat currency payments for P2P transactions"
+  ctx_payment_processors -> ctx_retail_traders "Processes card payments for cryptocurrency purchases"
+
+  // Communication Services
+  ctx_bizzan_exchange -> ctx_sms_gateway "Sends verification codes and security notifications"
+  ctx_bizzan_exchange -> ctx_email_service "Delivers user notifications, reports, and marketing content"
+  ctx_sms_gateway -> ctx_retail_traders "Delivers SMS verification codes and alerts"
+  ctx_email_service -> ctx_retail_traders "Sends email notifications and reports"
+
+  // Security & Verification Services
+  ctx_bizzan_exchange -> ctx_kyc_providers "Performs identity verification and compliance screening"
+  ctx_bizzan_exchange -> ctx_captcha_services "Provides bot protection for registration and login"
+  ctx_bizzan_exchange -> ctx_fraud_detection "Monitors transactions for suspicious activity"
+  
+  // Infrastructure Services
+  ctx_bizzan_exchange -> ctx_cloud_storage "Stores KYC documents, user files, and system assets"
+  ctx_bizzan_exchange -> ctx_monitoring "Reports performance metrics and business analytics"
+  
+  // External Data Integration
+  ctx_bizzan_exchange -> ctx_price_feeds "Retrieves exchange rates and market data"
+  ctx_bizzan_exchange -> ctx_regulatory_databases "Validates identities and performs compliance checks"
+
+  // Reverse Flows
+  ctx_kyc_providers -> ctx_bizzan_exchange "Returns verification results and compliance status"
+  ctx_regulatory_databases -> ctx_bizzan_exchange "Provides identity validation and compliance data"
+  ctx_price_feeds -> ctx_bizzan_exchange "Supplies real-time exchange rates and market prices"
+}
+
+views {
+  view ctx_ecosystem_overview {
+    title "Bizzan Exchange Ecosystem Overview"
+    description "Complete system context showing all stakeholders, external systems, and integration points"
+    include *
+  }
+  
+  view ctx_trading_users {
+    title "Trading User Interactions"
+    description "Primary trading users and their interactions with the exchange platform"
+    include ctx_retail_traders, ctx_institutional_traders, ctx_otc_traders, ctx_bizzan_exchange, ctx_bitcoin_network, ctx_ethereum_network, ctx_altcoin_networks
+  }
+  
+  view ctx_administrative {
+    title "Administrative Operations"
+    description "Administrative users, compliance, and operational management systems"
+    include ctx_exchange_admins, ctx_customer_support, ctx_compliance_officers, ctx_bizzan_exchange, ctx_kyc_providers, ctx_regulatory_databases, ctx_fraud_detection
+  }
+  
+  view ctx_financial_operations {
+    title "Financial Systems Integration"
+    description "Cryptocurrency and fiat payment processing systems"
+    include ctx_bizzan_exchange, ctx_bitcoin_network, ctx_ethereum_network, ctx_altcoin_networks, ctx_fiat_banks, ctx_payment_processors, ctx_otc_traders, ctx_retail_traders
+  }
+  
+  view ctx_security_compliance {
+    title "Security and Compliance Framework"
+    description "Security services, verification systems, and compliance infrastructure"
+    include ctx_bizzan_exchange, ctx_kyc_providers, ctx_captcha_services, ctx_fraud_detection, ctx_regulatory_databases, ctx_compliance_officers, ctx_sms_gateway
+  }
+  
+  view ctx_communication_infrastructure {
+    title "Communication and Infrastructure"
+    description "External communication services and infrastructure dependencies"
+    include ctx_bizzan_exchange, ctx_sms_gateway, ctx_email_service, ctx_cloud_storage, ctx_monitoring, ctx_price_feeds, ctx_retail_traders, ctx_exchange_admins
+  }
+  
+  view ctx_blockchain_integration {
+    title "Blockchain Network Integration"
+    description "Multi-cryptocurrency blockchain integration and wallet management"
+    include ctx_bizzan_exchange, ctx_bitcoin_network, ctx_ethereum_network, ctx_altcoin_networks, ctx_retail_traders, ctx_institutional_traders, ctx_otc_traders
+  }
+}
